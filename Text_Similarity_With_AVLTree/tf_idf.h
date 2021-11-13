@@ -49,6 +49,10 @@ void GetWords(AVLDifferNode*& root, AVLNode* tree) {
 	GetWords(root, tree->right);
 }
 
+
+
+
+
 AVLDifferNode* GetWordsNotDuplicatedBetweenTwoText(AVLNode* allWordsText1, AVLNode* allWordsText2) {
 	AVLDifferNode* root = nullptr;
 
@@ -60,9 +64,11 @@ AVLDifferNode* GetWordsNotDuplicatedBetweenTwoText(AVLNode* allWordsText1, AVLNo
 
 void GetWeightOfVectorText(AVLNode* allWords1, AVLNode* allWords2, AVLDifferNode*& vectorWeight, AVLNode* root, int numberOfText) {
 	if (!vectorWeight) return;
+
 	double tf = TF(GetNumberOfOccurWord(root, vectorWeight->word), TotalSize(root));
 	double idf = IDF(GetNumberOfTextContainWord(allWords1, allWords2, vectorWeight->word), numberOfText);
 	vectorWeight->weight = tf * idf;
+
 	GetWeightOfVectorText(allWords1, allWords2, vectorWeight->left, root, numberOfText);
 	GetWeightOfVectorText(allWords1, allWords2, vectorWeight->right, root, numberOfText);
 }

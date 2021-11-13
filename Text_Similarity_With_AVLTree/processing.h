@@ -42,8 +42,12 @@ int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName) {
 	for (int i = 0; i < listInputFileName.size(); i++) {
 		std::cout << i + 1 << ". " << listInputFileName[i] << std::endl;
 	}
+	again:
 	std::cout << "Chon file text can so sanh (Nhap so thu tu): ";
 	int select; std::cin >> select;
+	if (select > listInputFileName.size()) {
+		goto again;
+	}
 	std::cout << "Cac file con lai duoc dung lam mau de so sanh voi file ban chon\n" << std::endl;
 	return select - 1;
 }
@@ -91,7 +95,7 @@ void Calculate_Similarity_With_Word_Unit(AVLNode* stopWordsTree, int numberOfFil
 		DisplaySimilarity(sim, listInputFileName, select);
 		std::cout << "\nPress ESC to exit\nPress any key to do again\n";
 		char c =_getch();
-		if (c == 27)return;
+		if (c == 27) return;
 	}
 }
 
@@ -115,7 +119,7 @@ void Start() {
 	std::cout << std::endl;
 	Calculate_Similarity_With_Word_Unit(stopWordsTree, numberOfFile);
 
-	Calculate_Similarity_With_Sentence_Unit();
+	
 
 
 
@@ -124,6 +128,7 @@ void Start() {
 
 
 	/*
+	Calculate_Similarity_With_Sentence_Unit();
 	end = clock();
 	duration = ((double)end - start) / CLOCKS_PER_SEC;
 	std::cout << duration;

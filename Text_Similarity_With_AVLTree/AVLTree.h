@@ -4,9 +4,9 @@
 
 struct AVLDifferNode {
 	std::string word;
-	int height;
 	double weight;
 
+	int height;
 	AVLDifferNode* left;
 	AVLDifferNode* right;
 
@@ -20,11 +20,13 @@ struct AVLDifferNode {
 
 };
 
+
 struct AVLNode {
 	std::string word;
-	int height;
 	int count;
 	std::vector<int> order;
+
+	int height;
 	AVLNode* left;
 	AVLNode* right;
 
