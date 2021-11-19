@@ -146,6 +146,8 @@
     <ClInclude Include="fileProcessing.h" />
     <ClInclude Include="normalize.h" />
     <ClInclude Include="processing.h" />
+    <ClInclude Include="queue.h" />
+    <ClInclude Include="stack.h" />
     <ClInclude Include="tf_idf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

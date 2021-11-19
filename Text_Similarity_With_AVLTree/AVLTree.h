@@ -4,9 +4,9 @@
 
 struct AVLDifferNode {
 	std::string word;
+	int height;
 	double weight;
 
-	int height;
 	AVLDifferNode* left;
 	AVLDifferNode* right;
 
@@ -20,17 +20,16 @@ struct AVLDifferNode {
 
 };
 
-
-struct AVLNode {
+struct AVLWordNode {
 	std::string word;
 	int count;
 	std::vector<int> order;
 
 	int height;
-	AVLNode* left;
-	AVLNode* right;
+	AVLWordNode* left;
+	AVLWordNode* right;
 
-	AVLNode(std::string value) {
+	AVLWordNode(std::string value) {
 		word = value;
 		height = 1;
 		count = 1;
@@ -38,7 +37,7 @@ struct AVLNode {
 		right = nullptr;
 	}
 
-	AVLNode(std::string value, int x) {
+	AVLWordNode(std::string value, int x) {
 		word = value;
 		height = 1;
 		count = 1;
@@ -48,13 +47,14 @@ struct AVLNode {
 	}
 };
 
+
 template<class T>
 int Size(T root) {
 	if (!root) return 0;
 	return Size(root->right) + Size(root->left) + 1;
 }
 
-int TotalSize(AVLNode* root) {
+int TotalSize(AVLWordNode* root) {
 	if (!root) return 0;
 	return TotalSize(root->right) + TotalSize(root->left) + root->count;
 }
@@ -133,9 +133,22 @@ void NLR(T root) {
 	NLR(root->right);
 }
 
-AVLNode* Insert(AVLNode* root, std::string value, int order) {
+int FindOrder(AVLWordNode* root, std::string value) {
+	if (!root) return 0;
+
+	if (value.compare(root->word) < 0) {
+		return FindOrder(root->left, value);
+	}
+	else if (value.compare(root->word) > 0) {
+		return FindOrder(root->right, value);
+	}
+	else
+		return root->order[0];
+}
+
+AVLWordNode* Insert(AVLWordNode* root, std::string value, int order) {
 	if (!root) {
-		return new AVLNode(value,order);
+		return new AVLWordNode(value,order);
 	}
 
 	if(value.compare(root->word) == 0){
@@ -177,17 +190,15 @@ AVLNode* Insert(AVLNode* root, std::string value, int order) {
 	return root;
 }
 
-AVLNode* FindMostRightNodeAtSubLeftTree(AVLNode* root) {
-	/*if (!root->right) return root;
-	FindMostRightNodeAtSubLeftTree(root->right);*/
-	AVLNode* curr = root;
+AVLWordNode* FindMostRightNodeAtSubLeftTree(AVLWordNode* root) {
+	AVLWordNode* curr = root;
 	while (curr->right != nullptr) {
 		curr = curr->right;
 	}
 	return curr;
 }
 
-AVLNode* RemoveNode(AVLNode* root, std::string value) {
+AVLWordNode* RemoveNode(AVLWordNode* root, std::string value) {
 	if (!root) return root;
 		
 	if (value.compare(root->word) < 0) {
@@ -202,7 +213,7 @@ AVLNode* RemoveNode(AVLNode* root, std::string value) {
 			return nullptr;
 		}*/
 		if ((root->left == nullptr) || (root->right == nullptr)) {
-			AVLNode* temp = root->left ? root->left : root->right;
+			AVLWordNode* temp = root->left ? root->left : root->right;
 
 			if (temp == nullptr) {
 				temp = root;
@@ -214,7 +225,7 @@ AVLNode* RemoveNode(AVLNode* root, std::string value) {
 			free(temp);
 		}
 		else {
-			AVLNode* temp = FindMostRightNodeAtSubLeftTree(root->left);
+			AVLWordNode* temp = FindMostRightNodeAtSubLeftTree(root->left);
 			root->word = temp->word;
 			root->count = temp->count;
 			root->order = temp->order;
@@ -285,6 +296,73 @@ AVLDifferNode* Insert(AVLDifferNode* root, std::string value) {
 
 	//Phải - trái
 	if (bal < -1 && value.compare(root->right->word) < 0) {
+		root->right = RotateRight(root->right);
+		return RotateLeft(root);
+	}
+
+	return root;
+}
+
+
+struct AVLSentenceNode {
+
+	int orderSentence;
+	int height;
+	AVLWordNode* wordRoot;
+
+	AVLSentenceNode* left;
+	AVLSentenceNode* right;
+
+	AVLSentenceNode(std::vector<std::string> sents, int order) {
+		int len = sents.size();
+		int count = 1;
+		wordRoot = nullptr;
+		for (int i = 0; i < len; i++) {
+			wordRoot = Insert(wordRoot, sents[i], count++);
+		}
+		orderSentence = order;
+		height = 1;
+		left = nullptr;
+		right = nullptr;
+	}
+};
+
+
+
+AVLSentenceNode* Insert(AVLSentenceNode* root, std::vector<std::string> sents, int order) {
+	if (!root) {
+		return new AVLSentenceNode(sents,order);
+	}
+
+	if (order < root->orderSentence) {
+		root->left = Insert(root->left, sents, order);
+	}
+	else if(order > root->orderSentence) {
+		root->right = Insert(root->right, sents, order);
+	}
+	else {
+		return root;
+	}
+
+	root->height = GetMaxHeight(root);
+
+	int bal = GetBalanceWeight(root);
+
+	//Trái - trái
+	if (bal > 1 && order < root->left->orderSentence) {
+		return RotateRight(root);
+	}
+	//Phải - phải
+	if (bal < -1 && order > root->right->orderSentence) {
+		return RotateLeft(root);
+	}
+	//Trái - phải
+	if (bal > 1 && order > root->left->orderSentence) {
+		root->left = RotateLeft(root->left);
+		return RotateRight(root);
+	}
+	//Phải - trái
+	if (bal < -1 && order < root->right->orderSentence) {
 		root->right = RotateRight(root->right);
 		return RotateLeft(root);
 	}

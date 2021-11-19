@@ -4,18 +4,23 @@
 #include <algorithm>
 #include "AVLTree.h"
 
-bool IsAlphabetCharacter(char c) {
+bool IsAlphabetCharacter(const char &c) {
     if (('0' <= c && c <= '9') || ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')) {
         return true;
     }
     return false;
 }
-
-void StringTolowerAndRemoveCharacter(std::string& str)
+bool IsPunctual(const char &c) {
+    if (c == '.' || c == '!' || c == '?') {
+        return true;
+    }
+    return false;
+}
+void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunctual)
 {
     int len = str.length();
 
-    std::string newStr="";
+    std::string newStr = "";
     for (int i = 0; i < len; i++) {
         if (str[i] >= 'A' && str[i] <= 'Z') {
             str[i] += 32;
@@ -24,12 +29,18 @@ void StringTolowerAndRemoveCharacter(std::string& str)
             newStr += str[i];
         }
     }
+
+    if (!isRemovePunctual) {
+        if (IsPunctual(str[len-1])) {
+            newStr += str[len-1];
+        }
+    }
     if (newStr != "")
         str = newStr;
 }
 
 
-void Normalize(AVLNode* &root, AVLNode* stopWords) {
+void Normalize(AVLWordNode* &root, AVLWordNode* stopWords) {
     if (!stopWords) return;
     if (Contain(root, stopWords->word)) {
         root = RemoveNode(root, stopWords->word);
