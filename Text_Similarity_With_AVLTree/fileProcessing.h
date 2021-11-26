@@ -50,41 +50,59 @@ AVLSentenceNode* GetAllSentenceFromFile(const std::string& fileName,AVLWordNode*
 	}
 	AVLSentenceNode* root = nullptr;
 	std::string word;
-	std::vector<std::string> sents;
+	AVLWordNode* allWords = nullptr;
 	int countSent = 1;
+	int orderWord = 1;
 	bool isRemovePunctual = false;
 
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		if (!Contain(stopWords, word)) {
-			sents.push_back(word);
-		}
+		
 		if (IsPunctual(word[word.length() - 1])) {
 			word.pop_back();
 			if (!Contain(stopWords, word)) {
-				sents.pop_back();
-				sents.push_back(word);
+				allWords = Insert(allWords, word, orderWord++);
 			}
-			root = Insert(root, sents, countSent++);
-			sents.clear();
+			root = Insert(root, allWords, countSent++);
+			allWords = nullptr;
+			orderWord = 1;
+		}
+		else if (!Contain(stopWords, word)) {
+			allWords = Insert(allWords, word, orderWord++);
 		}
 	}
 
 	in.close();
 	return root;
 }
-/*
-void WriteTree(AVLWordNode* root, std::ostream& os) {
-	if (root) {
-		WriteTree(root->left, os);
-		os << root->word << std::endl;
-		WriteTree(root->right, os);
-	}
-}
 
-void Write(AVLWordNode* root) {
-	std::ofstream ou("test.txt");
-	WriteTree(root, ou);
-	ou.close();
+std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode* stopWords) {
+	std::ifstream in(fileName);
+	if (!in.is_open()) {
+		throw "Can't open " + fileName;
+	}
+	std::vector<AVLWordNode*> words;
+	std::string word;
+	AVLWordNode* allWords = nullptr;
+	bool isRemovePunctual = false;
+	int orderWord = 1;
+
+	while (in >> word) {
+		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
+		if (IsPunctual(word[word.length() - 1])) {
+			word.pop_back();
+			if (!Contain(stopWords, word)) {
+				allWords = Insert(allWords, word, orderWord++);
+			}
+			if(allWords)
+				words.push_back(allWords);
+			orderWord = 1;
+			allWords = nullptr;	
+		}
+		else if (!Contain(stopWords, word)) {
+			allWords = Insert(allWords, word, orderWord++);
+		}
+	}
+	in.close();
+	return words;
 }
-*/

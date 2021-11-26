@@ -29,14 +29,6 @@ struct AVLWordNode {
 	AVLWordNode* left;
 	AVLWordNode* right;
 
-	AVLWordNode(std::string value) {
-		word = value;
-		height = 1;
-		count = 1;
-		left = nullptr;
-		right = nullptr;
-	}
-
 	AVLWordNode(std::string value, int x) {
 		word = value;
 		height = 1;
@@ -46,7 +38,6 @@ struct AVLWordNode {
 		right = nullptr;
 	}
 };
-
 
 template<class T>
 int Size(T root) {
@@ -123,14 +114,6 @@ bool Contain(T root, std::string word) {
 		return Contain(root->right, word);
 	}else
 		return true;
-}
-
-template<class T>
-void NLR(T root) {
-	if (root == nullptr) return;
-	std::cout << root->word << "- weight: " << root->weight << std::endl;
-	NLR(root->left);
-	NLR(root->right);
 }
 
 int FindOrder(AVLWordNode* root, std::string value) {
@@ -304,6 +287,7 @@ AVLDifferNode* Insert(AVLDifferNode* root, std::string value) {
 }
 
 
+//Sentence Unit
 struct AVLSentenceNode {
 
 	int orderSentence;
@@ -313,13 +297,8 @@ struct AVLSentenceNode {
 	AVLSentenceNode* left;
 	AVLSentenceNode* right;
 
-	AVLSentenceNode(std::vector<std::string> sents, int order) {
-		int len = sents.size();
-		int count = 1;
-		wordRoot = nullptr;
-		for (int i = 0; i < len; i++) {
-			wordRoot = Insert(wordRoot, sents[i], count++);
-		}
+	AVLSentenceNode(AVLWordNode* allWords, int order) {
+		wordRoot = allWords;
 		orderSentence = order;
 		height = 1;
 		left = nullptr;
@@ -327,23 +306,21 @@ struct AVLSentenceNode {
 	}
 };
 
+AVLSentenceNode* Insert(AVLSentenceNode* root, AVLWordNode* allWords, int order) {
 
-
-AVLSentenceNode* Insert(AVLSentenceNode* root, std::vector<std::string> sents, int order) {
 	if (!root) {
-		return new AVLSentenceNode(sents,order);
+		return new AVLSentenceNode(allWords, order);
 	}
 
 	if (order < root->orderSentence) {
-		root->left = Insert(root->left, sents, order);
+		root->left = Insert(root->left, allWords, order);
 	}
-	else if(order > root->orderSentence) {
-		root->right = Insert(root->right, sents, order);
+	else if (order > root->orderSentence) {
+		root->right = Insert(root->right, allWords, order);
 	}
 	else {
 		return root;
 	}
-
 	root->height = GetMaxHeight(root);
 
 	int bal = GetBalanceWeight(root);

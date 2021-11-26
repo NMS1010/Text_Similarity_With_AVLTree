@@ -150,6 +150,12 @@
     <ClInclude Include="stack.h" />
     <ClInclude Include="tf_idf.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="text1.txt" />
+    <Text Include="text2.txt" />
+    <Text Include="text3.txt" />
+    <Text Include="text4.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

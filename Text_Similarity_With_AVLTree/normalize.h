@@ -10,12 +10,14 @@ bool IsAlphabetCharacter(const char &c) {
     }
     return false;
 }
+
 bool IsPunctual(const char &c) {
     if (c == '.' || c == '!' || c == '?') {
         return true;
     }
     return false;
 }
+
 void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunctual)
 {
     int len = str.length();
@@ -37,14 +39,4 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
     }
     if (newStr != "")
         str = newStr;
-}
-
-
-void Normalize(AVLWordNode* &root, AVLWordNode* stopWords) {
-    if (!stopWords) return;
-    if (Contain(root, stopWords->word)) {
-        root = RemoveNode(root, stopWords->word);
-    }
-    Normalize(root,stopWords->left);
-    Normalize(root,stopWords->right);
 }
