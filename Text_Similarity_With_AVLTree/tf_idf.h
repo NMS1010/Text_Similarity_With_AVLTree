@@ -170,7 +170,12 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(AVLWordNode* textTree1,
 //End Word Unit
 
 //Sentence Unit
-
+void ReleasePointer(int len1, int len2, double** &simMatrix) {
+	for (int i = 0; i < len1; i++) {
+		delete []simMatrix[i];
+	}
+	delete []simMatrix;
+}
 double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> textTree1, std::vector<AVLWordNode*> textTree2) {
 	int len1 = textTree1.size();
 	int len2 = textTree2.size();
@@ -214,7 +219,7 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 		}
 		sumSimText2 += max2;
 	}
-
+	ReleasePointer(len1, len2, simMatrix);
 
 	int total = std::max(len1, len2);
 	double sim = (sumSimText1 + sumSimText2) / (2.0 * total);
