@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-#include "stack.h"
 #include "AVLTree.h"
 
 
@@ -110,8 +109,8 @@ double Cosine(AVLDifferNode* vectorWeight1, AVLDifferNode* vectorWeight2) {
 	return (double)a / (std::sqrt(b*c));
 }
 
-double GetSimOfOrderedVector(std::vector<int> orderWord1,
-	std::vector<int> orderWord2) {
+double GetSimOfOrderedVector(std::vector<double> orderWord1,
+	std::vector<double> orderWord2) {
 
 	double a = 0, b = 0;
 	int size = std::max(orderWord1.size(),orderWord2.size());
@@ -125,6 +124,7 @@ double GetSimOfOrderedVector(std::vector<int> orderWord1,
 		a += temp1 * temp1;
 		b += temp2 * temp2;
 	}
+	if (b == 0) return 0;
 	return 1.0 - std::sqrt((double)a / b);
 }
 
@@ -140,7 +140,7 @@ double Get_Sim_Between_Two_Text_With_Word_Unit(AVLWordNode* textTree1, AVLWordNo
 	return Cosine(weightVector1, weightVector2);
 }
 
-void GetOrder(AVLWordNode* wordsTree, std::vector<int>& orderVector,
+void GetOrder(AVLWordNode* wordsTree, std::vector<double>& orderVector,
 	AVLDifferNode* commonWordVector) {
 
 	if (!commonWordVector) return;
@@ -149,10 +149,10 @@ void GetOrder(AVLWordNode* wordsTree, std::vector<int>& orderVector,
 	GetOrder(wordsTree, orderVector, commonWordVector->right);
 }
 
-std::vector<int> GetOrderVector(AVLWordNode* wordsTree,
+std::vector<double> GetOrderVector(AVLWordNode* wordsTree,
 	AVLDifferNode* commonWordVector) {
 
-	std::vector<int> orderVector;
+	std::vector<double> orderVector;
 	GetOrder(wordsTree, orderVector, commonWordVector);
 	return orderVector;
 }
@@ -161,8 +161,8 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(AVLWordNode* textTree1,
 
 	AVLDifferNode* commonWordVector = GetWordsNotDuplicatedBetweenTwoText(textTree1, textTree2);
 
-	std::vector<int> weightOrderVector1 = GetOrderVector(textTree1, commonWordVector);
-	std::vector<int> weightOrderVector2 = GetOrderVector(textTree2, commonWordVector);
+	std::vector<double> weightOrderVector1 = GetOrderVector(textTree1, commonWordVector);
+	std::vector<double> weightOrderVector2 = GetOrderVector(textTree2, commonWordVector);
 
 	return ( 0.5 * Get_Sim_Between_Two_Text_With_Word_Unit(textTree1, textTree2) + 
 		0.5 * GetSimOfOrderedVector(weightOrderVector1, weightOrderVector2) );
@@ -170,68 +170,7 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(AVLWordNode* textTree1,
 //End Word Unit
 
 //Sentence Unit
-//1
-/*
-double GetWeightEachSent(AVLWordNode* sentence, AVLSentenceNode* textTree, std::vector<double>& orderSent) {
-	Stack<AVLSentenceNode*> st;
 
-	AVLSentenceNode* curr = textTree;
-	double simBetweenTwoSent = 0;
-	while (curr != nullptr || !st.Empty()) {
-		while (curr != nullptr) {
-			st.push(curr);
-			curr = curr->left;
-		}
-		AVLSentenceNode* temp = st.pop();
-		simBetweenTwoSent = std::max(simBetweenTwoSent, Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(sentence, temp->wordRoot));
-		if (simBetweenTwoSent == 1) {
-			orderSent.push_back(temp->orderSentence);
-			return simBetweenTwoSent;
-		}
-		curr = temp->right;
-	}
-	return simBetweenTwoSent;
-}
-
-void GetSumSimilarityEachText(AVLSentenceNode* textTree, AVLSentenceNode* textTreeSample,
-	double &sum, int &numberSent, std::vector<double>& orderSent) {
-
-	if (!textTree) return;
-	GetSumSimilarityEachText(textTree->left, textTreeSample, sum, numberSent, orderSent);
-
-	double temp = GetWeightEachSent(textTree->wordRoot, textTreeSample, orderSent);
-	sum += temp;
-	numberSent++;
-
-	GetSumSimilarityEachText(textTree->right, textTreeSample, sum, numberSent, orderSent);
-
-}
-
-
-double Get_Sim_Between_Two_Text_With_Sentence_Unit(AVLSentenceNode* textTree1, AVLSentenceNode* textTree2) {
-	std::vector<double> orderSent1;
-	std::vector<double> orderSent2;
-
-	double sum1 = 0;
-	int numberSent1 = 0;
-	GetSumSimilarityEachText(textTree1, textTree2, sum1, numberSent1, orderSent1);
-
-	double sum2 = 0;
-	int numberSent2 = 0;
-	GetSumSimilarityEachText(textTree2, textTree1, sum2, numberSent2, orderSent2);
-
-	int total = std::max(numberSent1, numberSent2);
-	double temp1 = (sum1 + sum2) / (2 * (double)total);
-	double temp2 = Cosine(orderSent1, orderSent2);
-
-	if (temp1 == 1) {
-		return temp2;
-	}
-
-	return 0.8*temp1 + 0.2*temp2;
-}
-*/
-//2
 double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> textTree1, std::vector<AVLWordNode*> textTree2) {
 	int len1 = textTree1.size();
 	int len2 = textTree2.size();
@@ -257,7 +196,7 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 				max1 = simMatrix[i][j];
 			}
 			if (simMatrix[i][j] == 1) {
-				orderVec1.push_back(j);
+				orderVec1.push_back(j+1.0);
 			}
 		}
 		sumSimText1 += max1;
@@ -270,7 +209,7 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 				max2 = simMatrix[i][j];
 			}
 			if (simMatrix[i][j] == 1) {
-				orderVec2.push_back(i);
+				orderVec2.push_back(i+1.0);
 			}
 		}
 		sumSimText2 += max2;
@@ -283,6 +222,9 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 
 	if (sim == 1) {
 		return orderCosine;
+	}
+	if (orderVec1.size() == 0) {
+		return sim;
 	}
 	return sim * 0.8 + orderCosine * 0.2;
 }

@@ -18,7 +18,7 @@ int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName) {
 	Intro();
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i]  << std::endl;
+		std::cout << i + 1 << ". " << listInputFileName[i] << std::endl;
 	}
 again:
 	std::cout << "Choose file text you need to compare (enter its order): ";
@@ -28,12 +28,13 @@ again:
 	}
 	return select - 1;
 }
+
 int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<AVLWordNode*> allWordsTree) {
 	system("cls");
 	Intro();
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i] <<"(Total Words: "<< TotalSize(allWordsTree[i]) <<")"<< std::endl;
+		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Words: " << TotalSize(allWordsTree[i]) << ")" << std::endl;
 	}
 again:
 	std::cout << "Choose file text you need to compare (enter its order): ";
@@ -58,7 +59,7 @@ int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std
 	Intro();
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Sent: " << allSentTree[i].size() <<", Total Words: " << GetNumberOfWordsEachSent(allSentTree[i])<< ")" << std::endl;
+		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Sent: " << allSentTree[i].size() << ", Total Words: " << GetNumberOfWordsEachSent(allSentTree[i]) << ")" << std::endl;
 	}
 again:
 	std::cout << "Choose file text you need to compare (enter its order): ";
@@ -83,9 +84,17 @@ std::vector<std::string> GetListFileName(int numberOfFile) {
 void DisplaySimilarity(std::vector<double> sim, std::vector<std::string> listInputFileName, int select) {
 	system("cls");
 	std::cout << "Document similarity:" << std::endl;
+	int posmax = -1;
+	double maxVal = -1;
 	for (int i = 0; i < sim.size(); i++) {
 		std::cout << listInputFileName[select] << " VS " << listInputFileName[i] << " : " << sim[i] * 100 << "%" << std::endl;
+		if (i != select && sim[i] > maxVal) {
+			posmax = i;
+			maxVal = sim[i];
+		}
 	}
+	if (posmax == -1) return;
+	std::cout << "\n" << "===> " << listInputFileName[posmax] << " is the most similar to " << listInputFileName[select] << " with " << maxVal * 100 << "% (except itself)" << std::endl;
 }
 
 // Word Unit
@@ -95,7 +104,7 @@ std::vector<AVLWordNode*> GetWordsOnEachText(int numberOfFile, AVLWordNode* stop
 		try {
 			wordsTree[i] = GetAllWordFromFile(listInputFileName[i], stopWords);
 		}
-		catch(std::string e){
+		catch (std::string e) {
 			throw e;
 		}
 	}
@@ -103,7 +112,7 @@ std::vector<AVLWordNode*> GetWordsOnEachText(int numberOfFile, AVLWordNode* stop
 }
 
 void Calculate_Similarity_With_Word_Unit(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
-	
+
 	try {
 		std::vector<AVLWordNode*> allWordsTree = GetWordsOnEachText(numberOfFile, stopWordsTree,
 			listInputFileName);
@@ -130,62 +139,17 @@ void Calculate_Similarity_With_Word_Unit(AVLWordNode* stopWordsTree, int numberO
 		throw e;
 	}
 
-	
+
 }
 
 //End Word Unit
 
 //Sentence Unit
 
-/*
-std::vector<AVLSentenceNode*> GetSentencesOnEachText(int numberOfFile, std::vector<std::string> listInputFileName, AVLWordNode* stopWordsTree) {
-	std::vector<AVLSentenceNode*> sentsTree(numberOfFile);
-	for (int i = 0; i < numberOfFile; i++) {
-		try {
-			sentsTree[i] = GetAllSentenceFromFile(listInputFileName[i], stopWordsTree);
-		}
-		catch (std::string e) {
-			throw e;
-		}
-	}
-	return sentsTree;
-}
+std::vector<std::vector<AVLWordNode*>>  GetSentencesOnEachText(int numberOfFile, std::vector<std::string> listInputFileName, AVLWordNode* stopWordsTree) {
 
-void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree,int numberOfFile,std::vector<std::string> listInputFileName) {
-	try {
-		std::vector<AVLSentenceNode*> allSentTree = GetSentencesOnEachText(numberOfFile, listInputFileName, stopWordsTree);
-
-		while (true) {
-			int select = DisplayListFileNameAndSelect(listInputFileName);
-			std::vector<double> sim(listInputFileName.size());
-			sim[select] = 1;
-			clock_t start, end;
-			double duration;
-			start = clock();
-			for (int i = 0; i < numberOfFile; i++) {
-				if(i != select)
-					sim[i] = Get_Sim_Between_Two_Text_With_Sentence_Unit(allSentTree[select], allSentTree[i]);
-			}
-			end = clock();
-			duration = ((double)end - start) / CLOCKS_PER_SEC;
-			
-			DisplaySimilarity(sim, listInputFileName, select);
-			std::cout << "Elapsed Time: " << duration << std::endl;
-			std::cout << "\nPress ESC to return main menu\nPress any key to do again\n";
-			char c = _getch();
-			if (c == 27) return;
-		}
-	}
-	catch (std::string e) {
-		throw e;
-	}
-}
-*/
-
-std::vector<std::vector<AVLWordNode*>>  GetSentencesOnEachText1(int numberOfFile, std::vector<std::string> listInputFileName, AVLWordNode* stopWordsTree) {
-	
 	std::vector<std::vector<AVLWordNode*>> sentsTree(numberOfFile);
-	
+
 	for (int i = 0; i < numberOfFile; i++) {
 		try {
 			sentsTree[i] = GetVectorSent(listInputFileName[i], stopWordsTree);
@@ -197,9 +161,9 @@ std::vector<std::vector<AVLWordNode*>>  GetSentencesOnEachText1(int numberOfFile
 	return sentsTree;
 }
 
-void Calculate_Similarity_With_Sentence_Unit1(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
+void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
 	try {
-		std::vector<std::vector<AVLWordNode*>> allSentTree = GetSentencesOnEachText1(numberOfFile, listInputFileName, stopWordsTree);
+		std::vector<std::vector<AVLWordNode*>> allSentTree = GetSentencesOnEachText(numberOfFile, listInputFileName, stopWordsTree);
 
 
 		while (true) {
@@ -215,9 +179,9 @@ void Calculate_Similarity_With_Sentence_Unit1(AVLWordNode* stopWordsTree, int nu
 			}
 			end = clock();
 			duration = ((double)end - start) / CLOCKS_PER_SEC;
-			
+
 			DisplaySimilarity(sim, listInputFileName, select);
-			std::cout << "Elapsed Time: " << duration <<"s"<< std::endl;
+			std::cout << "Elapsed Time: " << duration << "s" << std::endl;
 			std::cout << "\nPress ESC to return main menu\nPress any key to do again\n";
 			char c = _getch();
 			if (c == 27) return;
@@ -236,14 +200,24 @@ void Start() {
 	AVLWordNode* stopWordsTree = GetStopWordsFromFile("stopwords.txt");
 
 	while (true) {
+	enter:
 		system("cls");
 		std::cout << "Enter number of file: ";
 		int numberOfFile;
 		std::cin >> numberOfFile;
+		if (numberOfFile <= 1) {
+			std::cout << "Please enter number is greater than 1\n";
+
+			std::cin.clear();
+			std::cin.ignore(INT_MAX, '\n');
+
+			char c =_getch();
+			goto enter;
+		}
 		std::cout << std::endl;
-		again:
+	again:
 		std::vector<std::string> listInputFileName = GetListFileName(numberOfFile);
-		menu:
+	menu:
 		system("cls");
 		std::cout << "What unit do you want to use?\n\t1.Word\n\t2.Sentence\n";
 		int select; std::cin >> select;
@@ -251,11 +225,11 @@ void Start() {
 			if (select == 1)
 				Calculate_Similarity_With_Word_Unit(stopWordsTree, numberOfFile, listInputFileName);
 			else if (select == 2)
-				Calculate_Similarity_With_Sentence_Unit1(stopWordsTree, numberOfFile, listInputFileName);
+				Calculate_Similarity_With_Sentence_Unit(stopWordsTree, numberOfFile, listInputFileName);
 		}
 		catch (std::string e) {
 			std::cout << e << std::endl << " Please enter correctly your file name." << std::endl;
-			_getch();
+			char c = _getch();
 			system("cls");
 			goto again;
 		}

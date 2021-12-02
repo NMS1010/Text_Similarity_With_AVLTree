@@ -191,10 +191,6 @@ AVLWordNode* RemoveNode(AVLWordNode* root, std::string value) {
 		root->right = RemoveNode(root->right, value);
 	}
 	else {
-		/*if (root->count > 1) {
-			(root->count)--;
-			return nullptr;
-		}*/
 		if ((root->left == nullptr) || (root->right == nullptr)) {
 			AVLWordNode* temp = root->left ? root->left : root->right;
 
@@ -287,62 +283,3 @@ AVLDifferNode* Insert(AVLDifferNode* root, std::string value) {
 }
 
 
-//Sentence Unit
-struct AVLSentenceNode {
-
-	int orderSentence;
-	int height;
-	AVLWordNode* wordRoot;
-
-	AVLSentenceNode* left;
-	AVLSentenceNode* right;
-
-	AVLSentenceNode(AVLWordNode* allWords, int order) {
-		wordRoot = allWords;
-		orderSentence = order;
-		height = 1;
-		left = nullptr;
-		right = nullptr;
-	}
-};
-
-AVLSentenceNode* Insert(AVLSentenceNode* root, AVLWordNode* allWords, int order) {
-
-	if (!root) {
-		return new AVLSentenceNode(allWords, order);
-	}
-
-	if (order < root->orderSentence) {
-		root->left = Insert(root->left, allWords, order);
-	}
-	else if (order > root->orderSentence) {
-		root->right = Insert(root->right, allWords, order);
-	}
-	else {
-		return root;
-	}
-	root->height = GetMaxHeight(root);
-
-	int bal = GetBalanceWeight(root);
-
-	//Trái - trái
-	if (bal > 1 && order < root->left->orderSentence) {
-		return RotateRight(root);
-	}
-	//Phải - phải
-	if (bal < -1 && order > root->right->orderSentence) {
-		return RotateLeft(root);
-	}
-	//Trái - phải
-	if (bal > 1 && order > root->left->orderSentence) {
-		root->left = RotateLeft(root->left);
-		return RotateRight(root);
-	}
-	//Phải - trái
-	if (bal < -1 && order < root->right->orderSentence) {
-		root->right = RotateRight(root->right);
-		return RotateLeft(root);
-	}
-
-	return root;
-}

@@ -43,39 +43,6 @@ AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode* stopWo
 	return root;
 }
 
-AVLSentenceNode* GetAllSentenceFromFile(const std::string& fileName,AVLWordNode* stopWords) {
-	std::ifstream in(fileName);
-	if (!in.is_open()) {
-		throw "Can't open " + fileName;
-	}
-	AVLSentenceNode* root = nullptr;
-	std::string word;
-	AVLWordNode* allWords = nullptr;
-	int countSent = 1;
-	int orderWord = 1;
-	bool isRemovePunctual = false;
-
-	while (in >> word) {
-		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		
-		if (IsPunctual(word[word.length() - 1])) {
-			word.pop_back();
-			if (!Contain(stopWords, word)) {
-				allWords = Insert(allWords, word, orderWord++);
-			}
-			root = Insert(root, allWords, countSent++);
-			allWords = nullptr;
-			orderWord = 1;
-		}
-		else if (!Contain(stopWords, word)) {
-			allWords = Insert(allWords, word, orderWord++);
-		}
-	}
-
-	in.close();
-	return root;
-}
-
 std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode* stopWords) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
