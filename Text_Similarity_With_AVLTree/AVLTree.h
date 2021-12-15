@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 
 struct AVLDifferNode {
 	std::string word;
