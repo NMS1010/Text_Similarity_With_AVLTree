@@ -96,14 +96,6 @@ int GetBalanceWeight(T root) {
 }
 
 template<class T>
-int Height(T root) {
-	if (root == nullptr) {
-		return 0;
-	}
-	return max(Height(root->left), Height(root->right)) + 1;
-}
-
-template<class T>
 bool Contain(T root, std::string word) {
 	if (!root) return false;
 

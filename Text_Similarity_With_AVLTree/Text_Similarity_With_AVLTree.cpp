@@ -5,9 +5,6 @@
 
 int main()
 {
-    
     Start();
     return 0;
 }
-
-

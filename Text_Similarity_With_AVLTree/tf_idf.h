@@ -170,12 +170,14 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(AVLWordNode* textTree1,
 //End Word Unit
 
 //Sentence Unit
+
 void ReleasePointer(int len1, int len2, double** &simMatrix) {
 	for (int i = 0; i < len1; i++) {
 		delete []simMatrix[i];
 	}
 	delete []simMatrix;
 }
+
 double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> textTree1, std::vector<AVLWordNode*> textTree2) {
 	int len1 = textTree1.size();
 	int len2 = textTree2.size();
@@ -219,6 +221,7 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 		}
 		sumSimText2 += max2;
 	}
+
 	ReleasePointer(len1, len2, simMatrix);
 
 	int total = std::max(len1, len2);
@@ -233,3 +236,49 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 	}
 	return sim * 0.8 + orderCosine * 0.2;
 }
+
+/*
+int test(std::string word, std::vector<AVLWordNode*> vectors){
+	
+	int len = vectors.size();
+	int count = 0;
+
+	for (int i = 0; i < len; i++) {
+		if (Contain(vectors[i], word)) {
+			count++;
+		}
+	}
+	return count;
+}
+
+void Get(AVLWordNode* textTree, double &w, AVLWordNode* root, int numberSent, std::vector<AVLWordNode*> vectors) {
+	if (!textTree) return;
+
+	double tf = TF(GetNumberOfOccurWord(root, textTree->word), TotalSize(root));
+	double idf = IDF(test(textTree->word,vectors),numberSent);
+	w += tf * idf;
+	Get(textTree->left, w, root, numberSent, vectors);
+	Get(textTree->right, w, root, numberSent, vectors);
+}
+
+std::vector<double> GetW(std::vector<AVLWordNode*> textTree) {
+	int len = textTree.size();
+	std::vector<double> weight(len);
+
+	for (int i = 0; i < len; i++) {
+		double temp = 0;
+		Get(textTree[i], temp, textTree[i], len, textTree);
+		weight[i] = (double)temp / TotalSize(textTree[i]);
+	}
+	return weight;
+}
+double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> textTree1, std::vector<AVLWordNode*> textTree2) {
+	int len1 = textTree1.size();
+	int len2 = textTree2.size();
+
+	std::vector<double> weight1 = GetW(textTree1);
+	std::vector<double> weight2 = GetW(textTree2);
+
+	return Cosine(weight1, weight2);
+}
+*/

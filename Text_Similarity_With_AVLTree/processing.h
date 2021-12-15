@@ -10,34 +10,14 @@
 #include "tf_idf.h"
 
 
-void Intro() {
-
-}
-int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName) {
-	system("cls");
-	Intro();
-	std::cout << "List file text entered: " << std::endl;
-	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i] << std::endl;
-	}
-again:
-	std::cout << "Choose file text you need to compare (enter its order): ";
-	int select; std::cin >> select;
-	if (select > listInputFileName.size()) {
-		goto again;
-	}
-	return select - 1;
-}
-
 int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<AVLWordNode*> allWordsTree) {
 	system("cls");
-	Intro();
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
 		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Words: " << TotalSize(allWordsTree[i]) << ")" << std::endl;
 	}
 again:
-	std::cout << "Choose file text you need to compare (enter its order): ";
+	std::cout << "Choose file text you want to compare (enter its order): ";
 	int select; std::cin >> select;
 	if (select > listInputFileName.size()) {
 		goto again;
@@ -56,13 +36,12 @@ int GetNumberOfWordsEachSent(std::vector<AVLWordNode*> Sent) {
 
 int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<std::vector<AVLWordNode*>> allSentTree) {
 	system("cls");
-	Intro();
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
 		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Sent: " << allSentTree[i].size() << ", Total Words: " << GetNumberOfWordsEachSent(allSentTree[i]) << ")" << std::endl;
 	}
 again:
-	std::cout << "Choose file text you need to compare (enter its order): ";
+	std::cout << "Choose file text you want to compare (enter its order): ";
 	int select; std::cin >> select;
 	if (select > listInputFileName.size()) {
 		goto again;
@@ -141,11 +120,9 @@ void Calculate_Similarity_With_Word_Unit(AVLWordNode* stopWordsTree, int numberO
 
 
 }
-
 //End Word Unit
 
 //Sentence Unit
-
 std::vector<std::vector<AVLWordNode*>>  GetSentencesOnEachText(int numberOfFile, std::vector<std::string> listInputFileName, AVLWordNode* stopWordsTree) {
 
 	std::vector<std::vector<AVLWordNode*>> sentsTree(numberOfFile);
@@ -165,7 +142,6 @@ void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int num
 	try {
 		std::vector<std::vector<AVLWordNode*>> allSentTree = GetSentencesOnEachText(numberOfFile, listInputFileName, stopWordsTree);
 
-
 		while (true) {
 			int select = DisplayListFileNameAndSelect(listInputFileName, allSentTree);
 			std::vector<double> sim(listInputFileName.size());
@@ -181,7 +157,7 @@ void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int num
 			duration = ((double)end - start) / CLOCKS_PER_SEC;
 
 			DisplaySimilarity(sim, listInputFileName, select);
-			std::cout << "Elapsed Time: " << duration << "s" << std::endl;
+			std::cout << "\nElapsed Time: " << duration << "s" << std::endl;
 			std::cout << "\nPress ESC to return main menu\nPress any key to do again\n";
 			char c = _getch();
 			if (c == 27) return;
@@ -233,9 +209,10 @@ void Start() {
 			system("cls");
 			goto again;
 		}
-		std::cout << "\nPress ESC to exit\nPress any key to do again\n";
+		std::cout << "\nPress ESC to exit\nPress any key to do again\nPress Space to enter another file";
 		char c = _getch();
 		if (c == 27) return;
+		else if (c == 32) goto enter;
 		else {
 			goto menu;
 		}
