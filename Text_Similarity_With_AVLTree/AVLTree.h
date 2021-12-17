@@ -13,7 +13,7 @@ struct AVLDifferNode {
 
 	AVLDifferNode(std::string value) {
 		word = value;
-		height = 1;
+		height = 0;
 		weight = 0;
 		left = nullptr;
 		right = nullptr;
@@ -32,7 +32,7 @@ struct AVLWordNode {
 
 	AVLWordNode(std::string value, int x) {
 		word = value;
-		height = 1;
+		height = 0;
 		count = 1;
 		order.push_back(x);
 		left = nullptr;
