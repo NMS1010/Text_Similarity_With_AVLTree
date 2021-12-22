@@ -24,7 +24,20 @@ again:
 	}
 	return select - 1;
 }
-
+int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<std::vector<std::string>> allWords) {
+	system("cls");
+	std::cout << "List file text entered: " << std::endl;
+	for (int i = 0; i < listInputFileName.size(); i++) {
+		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Words: " << allWords[i].size() << ")" << std::endl;
+	}
+again:
+	std::cout << "Choose file text you want to compare (enter its order): ";
+	int select; std::cin >> select;
+	if (select > listInputFileName.size()) {
+		goto again;
+	}
+	return select - 1;
+}
 int GetNumberOfWordsEachSent(std::vector<AVLWordNode*> Sent) {
 	int count = 0;
 	int len = Sent.size();
@@ -90,7 +103,7 @@ std::vector<AVLWordNode*> GetWordsOnEachText(int numberOfFile, AVLWordNode* stop
 	return wordsTree;
 }
 
-void Calculate_Similarity_With_Word_Unit(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
+void Calculate_Similarity_With_Word_Unit_Use_AVLTree(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
 
 	try {
 		std::vector<AVLWordNode*> allWordsTree = GetWordsOnEachText(numberOfFile, stopWordsTree,
@@ -102,8 +115,10 @@ void Calculate_Similarity_With_Word_Unit(AVLWordNode* stopWordsTree, int numberO
 			clock_t start, end;
 			double duration;
 			start = clock();
+			sim[select] = 1;
 			for (int i = 0; i < numberOfFile; i++) {
-				sim[i] = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWordsTree[select], allWordsTree[i]);
+				if(i!=select)
+					sim[i] = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWordsTree[select], allWordsTree[i]);
 			}
 			end = clock();
 			duration = ((double)end - start) / CLOCKS_PER_SEC;
@@ -168,12 +183,55 @@ void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int num
 		throw e;
 	}
 }
-
 //End Sentence Unit
 
+//Use Vector Structure
+std::vector<std::vector<std::string>> GetWordsOnEachText(int numberOfFile, std::vector<std::string> stopWords, std::vector<std::string> listInputFileName) {
+	std::vector<std::vector<std::string>> allWords(numberOfFile);
+	for (int i = 0; i < numberOfFile; i++) {
+		try {
+			allWords[i] = GetAllWordFromFile(listInputFileName[i], stopWords);
+		}
+		catch (std::string e) {
+			throw e;
+		}
+	}
+	return allWords;
+}
+void Calculate_Similarity_With_Word_Unit_Use_Vector(std::vector<std::string> stopwords, int numberOfFile, std::vector<std::string> listInputFileName) {
+	try {
+		std::vector<std::vector<std::string>> allWords = GetWordsOnEachText(numberOfFile, stopwords,
+			listInputFileName);
+		while (true) {
+			int select = DisplayListFileNameAndSelect(listInputFileName, allWords);
+
+			std::vector<double> sim(numberOfFile);
+			clock_t start, end;
+			double duration;
+			start = clock();
+			sim[select] = 1;
+			for (int i = 0; i < numberOfFile; i++) {
+				if (i != select)
+					sim[i] = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWords[select], allWords[i],stopwords);
+			}
+			end = clock();
+			duration = ((double)end - start) / CLOCKS_PER_SEC;
+			DisplaySimilarity(sim, listInputFileName, select);
+			std::cout << "\nElapsed Time: " << duration << "s" << std::endl;
+			std::cout << "\nPress ESC to return main menu\nPress any key to do again\n";
+			char c = _getch();
+			if (c == 27) return;
+		}
+	}
+	catch (std::string e) {
+		throw e;
+	}
+}
+//End Use Vector Structure
 void Start() {
 
 	AVLWordNode* stopWordsTree = GetStopWordsFromFile("stopwords.txt");
+	std::vector<std::string> stopwords = GetStopWords("stopwords.txt");
 
 	while (true) {
 	enter:
@@ -198,8 +256,15 @@ void Start() {
 		std::cout << "What unit do you want to use?\n\t1.Word\n\t2.Sentence\n";
 		int select; std::cin >> select;
 		try {
-			if (select == 1)
-				Calculate_Similarity_With_Word_Unit(stopWordsTree, numberOfFile, listInputFileName);
+			if (select == 1) {
+				system("cls");
+				std::cout << "What data structure do you want to use?\n\t1.Vector\n\t2.AVL Tree\n";
+				int options; std::cin >> options;
+				if (options == 2)
+					Calculate_Similarity_With_Word_Unit_Use_AVLTree(stopWordsTree, numberOfFile, listInputFileName);
+				else if (options == 1)
+					Calculate_Similarity_With_Word_Unit_Use_Vector(stopwords, numberOfFile, listInputFileName);
+			}
 			else if (select == 2)
 				Calculate_Similarity_With_Sentence_Unit(stopWordsTree, numberOfFile, listInputFileName);
 		}

@@ -144,8 +144,10 @@
   <ItemGroup>
     <ClInclude Include="AVLTree.h" />
     <ClInclude Include="fileProcessing.h" />
+    <ClInclude Include="linkedList.h" />
     <ClInclude Include="normalize.h" />
     <ClInclude Include="processing.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="tf_idf.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,8 @@
     <Text Include="text2.txt" />
     <Text Include="text3.txt" />
     <Text Include="text4.txt" />
+    <Text Include="doc1.txt" />
+    <Text Include="doc2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

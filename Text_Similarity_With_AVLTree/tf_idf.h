@@ -2,9 +2,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 
 #include "AVLTree.h"
-
+#include "search.h"
 
 double TF(const int &numberOfOccur, const int &totalWord) {
 	if (totalWord == 0) return 0;
@@ -16,6 +17,7 @@ double IDF(const int& numberTextHaveWord, const int& numberOfText) {
 	return 1 + std::log10((double)numberOfText / numberTextHaveWord);
 }
 
+//Use AVL Tree
 int GetNumberOfTextContainWord(AVLWordNode* allWords1,
 	AVLWordNode* allWords2,const std::string& word) {
 
@@ -57,8 +59,8 @@ double Cosine(const std::vector<double>& text1, const std::vector<double>& text2
 		b += (x * x);
 		c += (y * y);
 	}
-	if (a == 0) return 0;
-	return (double)a / (sqrt(b) * sqrt(c));
+	if (b == 0 || c==0) return 0;
+	return (double)a / (std::sqrt(b * c));
 }
 
 void GetWords(AVLDifferNode*& root, AVLWordNode* tree) {
@@ -236,4 +238,98 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 	}
 	return sim * 0.8 + orderCosine * 0.2;
 }
+//
+// 
+//Use Vector structure
+int GetNumberOfOccur(const std::string& str, const std::vector<std::string>& words) {
+	int count = 0;
+	int size = words.size();
+	for (int i = 0; i < size; i++) {
+		if (str == words[i]) count++;
+	}
+	return count;
+}
+
+int GetNumberOfTextHaveWord(const std::string& str, std::vector<std::string> allWords1, std::vector<std::string> allWords2) {
+	int count = 0;
+	if (LinearSearch(str, allWords1) != -1) {
+		count++;
+	}
+	if (LinearSearch(str, allWords2) != -1) {
+		count++;
+	}
+	return count;
+}
+std::vector<double> GetOrderWordVector(const std::vector<std::string>& allWords, const std::vector<std::string>& bagOfCommonWord) {
+	int sizeAllWords = allWords.size();
+	std::vector<double> orderWords;
+
+	int sizeBagOfCommonWords = bagOfCommonWord.size();
+
+	int pos;
+	for (int j = 0; j < sizeBagOfCommonWords; j++) {
+		pos = LinearSearch(bagOfCommonWord[j], allWords);
+		if (pos == -1) {
+			orderWords.push_back(0);
+		}
+		else {
+			orderWords.push_back(pos + 1.0);
+		}
+	}
+
+	return orderWords;
+}
+std::vector<double> GetWeightOfVector(const std::vector<std::string>& allWords, const std::vector<std::string>& sampleText, const std::vector<std::string>& bagOfCommonWords) {
+	int size = bagOfCommonWords.size();
+	int N = sampleText.size();
+	int numOfOccur;
+	std::vector<double> weightVector;
+	double tf, idf;
+	std::string tempStr;
+
+	for (int i = 0; i < size; i++) {
+		tempStr = bagOfCommonWords[i];
+		numOfOccur = GetNumberOfOccur(tempStr, sampleText);
+		tf = TF(numOfOccur, N);
+		idf = IDF(GetNumberOfTextHaveWord(tempStr, allWords, sampleText), 2);
+		weightVector.push_back(tf * idf);
+	}
+	return weightVector;
+}
+void GetWordsFromVector(std::set<std::string> &temp, std::vector<std::string> allWords) {
+	int size = allWords.size();
+	for (int j = 0; j < size; j++) {
+		//if(!CheckDuplicated(bagOfCommonWords,allWords1[j]))
+		//	bagOfCommonWords.push_back(allWords1[j]);
+		temp.insert(allWords[j]);
+	}
+}
+std::vector<std::string> ListOfWordsNotDuplicated(const std::vector<std::string>& allWords1, const std::vector<std::string>& allWords2) {
+	std::vector<std::string> bagOfCommonWords;
+	std::set<std::string> temp;
+	std::set<std::string> ::iterator it;
+	GetWordsFromVector(temp, allWords1);
+	GetWordsFromVector(temp, allWords2);
+	for (it = temp.begin(); it != temp.end(); ++it) {
+		bagOfCommonWords.push_back(*it);
+	}
+	return bagOfCommonWords;
+}
+double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(std::vector<std::string> allWords1, std::vector<std::string> allWords2, const std::vector<std::string>& stopwords) {
+
+	std::vector<std::string> bagOfCommonWords = ListOfWordsNotDuplicated(allWords1, allWords2);
+
+	std::vector<double> weightVector1 = GetWeightOfVector(allWords1, allWords2, bagOfCommonWords);
+	std::vector<double> weightVector2 = GetWeightOfVector(allWords2, allWords1, bagOfCommonWords);
+
+	double cs = Cosine(weightVector1, weightVector2);
+
+	std::vector<double> orderWords1 = GetOrderWordVector(allWords1, bagOfCommonWords);
+	std::vector<double> orderWords2 = GetOrderWordVector(allWords2, bagOfCommonWords);
+
+	double order = GetSimOfOrderedVector(orderWords1, orderWords2);
+
+	return 0.5 * cs + 0.5 * order;
+}
+//
 

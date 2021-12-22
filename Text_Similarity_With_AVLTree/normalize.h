@@ -33,10 +33,23 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
     }
 
     if (!isRemovePunctual) {
-        if (IsPunctual(str[len-1])) {
+        if (len >= 1 && IsPunctual(str[len-1])) {
             newStr += str[len-1];
+        }
+        else if (len >= 2 && IsPunctual(str[len - 2])) {
+            newStr += str[len - 2];
         }
     }
     if (newStr != "")
         str = newStr;
+}
+bool CheckDuplicated(const std::vector<std::string>& words, const std::string& str) {
+    int size = words.size();
+
+    for (int i = 0; i < size; i++) {
+        if (str == words[i]) {
+            return true;
+        }
+    }
+    return false;
 }

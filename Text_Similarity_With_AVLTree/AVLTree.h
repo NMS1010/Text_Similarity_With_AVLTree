@@ -93,7 +93,7 @@ T RotateLeft(T root) {
 template<class T>
 int GetBalanceWeight(T root) {
 	if (root) return GetHeight(root->left) - GetHeight(root->right);
-	return 0;
+
 }
 
 template<class T>
@@ -149,20 +149,19 @@ AVLWordNode* Insert(AVLWordNode* root, std::string value, int order) {
 		return RotateRight(root);
 	}
 	//Phải - phải
-	if (bal < -1 && value.compare(root->right->word) > 0) {
+	else if (bal < -1 && value.compare(root->right->word) > 0) {
 		return RotateLeft(root);
 	}
 	//Trái - phải
-	if (bal > 1 && value.compare(root->left->word) > 0) {
+	else if (bal > 1 && value.compare(root->left->word) > 0) {
 		root->left = RotateLeft(root->left);
 		return RotateRight(root);
 	}
 	//Phải - trái
-	if (bal < -1 && value.compare(root->right->word) < 0) {
+	else if (bal < -1 && value.compare(root->right->word) < 0) {
 		root->right = RotateRight(root->right);
 		return RotateLeft(root);
 	}
-
 	return root;
 }
 
@@ -256,23 +255,21 @@ AVLDifferNode* Insert(AVLDifferNode* root, std::string value) {
 	}
 
 	//Phải - phải
-	if (bal < -1 && value.compare(root->right->word) > 0) {
+	else if (bal < -1 && value.compare(root->right->word) > 0) {
 		return RotateLeft(root);
 	}
 
 	//Trái - phải
-	if (bal > 1 && value.compare(root->left->word) > 0) {
+	else if (bal > 1 && value.compare(root->left->word) > 0) {
 		root->left = RotateLeft(root->left);
 		return RotateRight(root);
 	}
 
 	//Phải - trái
-	if (bal < -1 && value.compare(root->right->word) < 0) {
+	else if (bal < -1 && value.compare(root->right->word) < 0) {
 		root->right = RotateRight(root->right);
 		return RotateLeft(root);
 	}
 
 	return root;
 }
-
-

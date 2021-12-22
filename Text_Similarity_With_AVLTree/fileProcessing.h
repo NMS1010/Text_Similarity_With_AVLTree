@@ -2,9 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 #include "AVLTree.h"
 #include "normalize.h"
+#include "search.h"
 
+//Use AVL Tree
 AVLWordNode* GetStopWordsFromFile(const std::string& fileName) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
@@ -73,3 +76,43 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 	in.close();
 	return words;
 }
+//
+//Use Vector
+std::vector<std::string> GetStopWords(std::string fileName) {
+	std::ifstream in(fileName);
+	if (!in.is_open()) {
+		std::cout << "Cannot open file";
+		exit(0);
+	}
+
+	std::vector<std::string> words;
+
+	std::string line;
+	while (in >> line) {
+		words.push_back(line);
+	}
+	in.close();
+	return words;
+}
+
+std::vector<std::string> GetAllWordFromFile(std::string fileName, std::vector<std::string> stopwords) {
+	std::ifstream in(fileName);
+	if (!in.is_open()) {
+		std::cout << "Cannot open file";
+		exit(0);
+	}
+
+	std::vector<std::string> words;
+
+	std::string line;
+	int stopwordSize = stopwords.size();
+	while (in >> line) {
+		StringTolowerAndRemoveCharacter(line, true);
+		if (BinarySearch(line, stopwords, 0, stopwordSize - 1) == -1)
+			words.push_back(line);
+	}
+	in.close();
+	return words;
+}
+
+//
