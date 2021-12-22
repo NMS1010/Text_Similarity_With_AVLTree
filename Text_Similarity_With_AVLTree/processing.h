@@ -10,7 +10,7 @@
 #include "tf_idf.h"
 
 
-int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<AVLWordNode*> allWordsTree) {
+int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, AVLWordNode** allWordsTree) {
 	system("cls");
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
@@ -24,11 +24,11 @@ again:
 	}
 	return select - 1;
 }
-int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std::vector<std::vector<std::string>> allWords) {
+int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, LinkedList** allWords) {
 	system("cls");
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Words: " << allWords[i].size() << ")" << std::endl;
+		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Words: " << allWords[i]->size << ")" << std::endl;
 	}
 again:
 	std::cout << "Choose file text you want to compare (enter its order): ";
@@ -90,8 +90,11 @@ void DisplaySimilarity(std::vector<double> sim, std::vector<std::string> listInp
 }
 
 // Word Unit
-std::vector<AVLWordNode*> GetWordsOnEachText(int numberOfFile, AVLWordNode* stopWords, std::vector<std::string> listInputFileName) {
-	std::vector<AVLWordNode*> wordsTree(numberOfFile);
+AVLWordNode** GetWordsOnEachText(int numberOfFile, AVLWordNode* stopWords, std::vector<std::string> listInputFileName) {
+	AVLWordNode** wordsTree = new AVLWordNode * [numberOfFile];
+	for (int i = 0; i < numberOfFile; i++) {
+		wordsTree[i] = new AVLWordNode;
+	}
 	for (int i = 0; i < numberOfFile; i++) {
 		try {
 			wordsTree[i] = GetAllWordFromFile(listInputFileName[i], stopWords);
@@ -106,7 +109,7 @@ std::vector<AVLWordNode*> GetWordsOnEachText(int numberOfFile, AVLWordNode* stop
 void Calculate_Similarity_With_Word_Unit_Use_AVLTree(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
 
 	try {
-		std::vector<AVLWordNode*> allWordsTree = GetWordsOnEachText(numberOfFile, stopWordsTree,
+		AVLWordNode** allWordsTree = GetWordsOnEachText(numberOfFile, stopWordsTree,
 			listInputFileName);
 		while (true) {
 			int select = DisplayListFileNameAndSelect(listInputFileName, allWordsTree);
@@ -185,12 +188,15 @@ void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int num
 }
 //End Sentence Unit
 
-//Use Vector Structure
-std::vector<std::vector<std::string>> GetWordsOnEachText(int numberOfFile, std::vector<std::string> stopWords, std::vector<std::string> listInputFileName) {
-	std::vector<std::vector<std::string>> allWords(numberOfFile);
+//Use LinkedList
+LinkedList** GetWordsOnText(int numberOfFile, AVLWordNode* stopWordsTree, std::vector<std::string> listInputFileName) {
+	LinkedList** allWords = new LinkedList * [numberOfFile];
+	for (int i = 0; i < numberOfFile; i++) {
+		allWords[i] = new LinkedList;
+	}
 	for (int i = 0; i < numberOfFile; i++) {
 		try {
-			allWords[i] = GetAllWordFromFile(listInputFileName[i], stopWords);
+			allWords[i] = GetWordsFromFile(listInputFileName[i], stopWordsTree);
 		}
 		catch (std::string e) {
 			throw e;
@@ -198,9 +204,9 @@ std::vector<std::vector<std::string>> GetWordsOnEachText(int numberOfFile, std::
 	}
 	return allWords;
 }
-void Calculate_Similarity_With_Word_Unit_Use_Vector(std::vector<std::string> stopwords, int numberOfFile, std::vector<std::string> listInputFileName) {
+void Calculate_Similarity_With_Word_Unit_Use_LinkedList(AVLWordNode* stopWordsTree, int numberOfFile, std::vector<std::string> listInputFileName) {
 	try {
-		std::vector<std::vector<std::string>> allWords = GetWordsOnEachText(numberOfFile, stopwords,
+		LinkedList** allWords = GetWordsOnText(numberOfFile, stopWordsTree,
 			listInputFileName);
 		while (true) {
 			int select = DisplayListFileNameAndSelect(listInputFileName, allWords);
@@ -212,7 +218,7 @@ void Calculate_Similarity_With_Word_Unit_Use_Vector(std::vector<std::string> sto
 			sim[select] = 1;
 			for (int i = 0; i < numberOfFile; i++) {
 				if (i != select)
-					sim[i] = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWords[select], allWords[i],stopwords);
+					sim[i] = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWords[select], allWords[i]);
 			}
 			end = clock();
 			duration = ((double)end - start) / CLOCKS_PER_SEC;
@@ -227,11 +233,10 @@ void Calculate_Similarity_With_Word_Unit_Use_Vector(std::vector<std::string> sto
 		throw e;
 	}
 }
-//End Use Vector Structure
+//
 void Start() {
 
 	AVLWordNode* stopWordsTree = GetStopWordsFromFile("stopwords.txt");
-	std::vector<std::string> stopwords = GetStopWords("stopwords.txt");
 
 	while (true) {
 	enter:
@@ -258,12 +263,12 @@ void Start() {
 		try {
 			if (select == 1) {
 				system("cls");
-				std::cout << "What data structure do you want to use?\n\t1.Vector\n\t2.AVL Tree\n";
+				std::cout << "What data structure do you want to use?\n\t1.Linked List\n\t2.AVL Tree\n";
 				int options; std::cin >> options;
 				if (options == 2)
 					Calculate_Similarity_With_Word_Unit_Use_AVLTree(stopWordsTree, numberOfFile, listInputFileName);
 				else if (options == 1)
-					Calculate_Similarity_With_Word_Unit_Use_Vector(stopwords, numberOfFile, listInputFileName);
+					Calculate_Similarity_With_Word_Unit_Use_LinkedList(stopWordsTree, numberOfFile, listInputFileName);
 			}
 			else if (select == 2)
 				Calculate_Similarity_With_Sentence_Unit(stopWordsTree, numberOfFile, listInputFileName);

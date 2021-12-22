@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <algorithm>
+
+#include "linkedList.h"
 #include "AVLTree.h"
 
 bool IsAlphabetCharacter(const char &c) {
@@ -43,13 +44,15 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
     if (newStr != "")
         str = newStr;
 }
-bool CheckDuplicated(const std::vector<std::string>& words, const std::string& str) {
-    int size = words.size();
+bool CheckDuplicated(LinkedList* words, const std::string& str) {
+    
+    SNode* temp = words->head;
 
-    for (int i = 0; i < size; i++) {
-        if (str == words[i]) {
+    while (temp) {
+        if (temp->word.compare(str) == 0) {
             return true;
         }
+        temp = temp->next;
     }
     return false;
 }

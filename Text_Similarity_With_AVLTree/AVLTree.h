@@ -29,7 +29,9 @@ struct AVLWordNode {
 	int height;
 	AVLWordNode* left;
 	AVLWordNode* right;
+	AVLWordNode() {
 
+	}
 	AVLWordNode(std::string value, int x) {
 		word = value;
 		height = 0;

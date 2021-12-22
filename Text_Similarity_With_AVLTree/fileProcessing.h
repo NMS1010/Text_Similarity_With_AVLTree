@@ -6,6 +6,7 @@
 #include "AVLTree.h"
 #include "normalize.h"
 #include "search.h"
+#include "linkedList.h"
 
 //Use AVL Tree
 AVLWordNode* GetStopWordsFromFile(const std::string& fileName) {
@@ -77,12 +78,11 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 	return words;
 }
 //
-//Use Vector
+//Use LinkedList
 std::vector<std::string> GetStopWords(std::string fileName) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
-		std::cout << "Cannot open file";
-		exit(0);
+		throw "Can't open " + fileName;
 	}
 
 	std::vector<std::string> words;
@@ -94,25 +94,20 @@ std::vector<std::string> GetStopWords(std::string fileName) {
 	in.close();
 	return words;
 }
-
-std::vector<std::string> GetAllWordFromFile(std::string fileName, std::vector<std::string> stopwords) {
+LinkedList* GetWordsFromFile(std::string fileName, AVLWordNode* stopWordsTree) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
-		std::cout << "Cannot open file";
-		exit(0);
+		throw "Can't open " + fileName;
 	}
-
-	std::vector<std::string> words;
-
+	LinkedList* lst = new LinkedList;
 	std::string line;
-	int stopwordSize = stopwords.size();
+
+	int count = 1;
 	while (in >> line) {
 		StringTolowerAndRemoveCharacter(line, true);
-		if (BinarySearch(line, stopwords, 0, stopwordSize - 1) == -1)
-			words.push_back(line);
+		if (!Contain(stopWordsTree,line))
+			lst->AddTail(new SNode(line,count++));
 	}
 	in.close();
-	return words;
+	return lst;
 }
-
-//
