@@ -26,12 +26,12 @@ struct LinkedList {
     void AddHead(SNode* p) {
         p->next = head;
         head = p;
-        tail = head;
         size++;
     }
     void AddTail(SNode* p) {
         if (head == nullptr) {
             AddHead(p);
+            tail = head;
             return;
         }
         tail->next = p;
