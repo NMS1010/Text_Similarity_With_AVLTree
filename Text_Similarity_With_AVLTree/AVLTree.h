@@ -167,70 +167,70 @@ AVLWordNode* Insert(AVLWordNode* root, std::string value, int order) {
 	return root;
 }
 
-AVLWordNode* FindMostRightNodeAtSubLeftTree(AVLWordNode* root) {
-	AVLWordNode* curr = root;
-	while (curr->right != nullptr) {
-		curr = curr->right;
-	}
-	return curr;
-}
-
-AVLWordNode* RemoveNode(AVLWordNode* root, std::string value) {
-	if (!root) return root;
-		
-	if (value.compare(root->word) < 0) {
-		root->left = RemoveNode(root->left, value);
-	}
-	else if (value.compare(root->word) > 0) {
-		root->right = RemoveNode(root->right, value);
-	}
-	else {
-		if ((root->left == nullptr) || (root->right == nullptr)) {
-			AVLWordNode* temp = root->left ? root->left : root->right;
-
-			if (temp == nullptr) {
-				temp = root;
-				root = nullptr;
-			}
-			else 
-				*root = *temp;
-
-			free(temp);
-		}
-		else {
-			AVLWordNode* temp = FindMostRightNodeAtSubLeftTree(root->left);
-			root->word = temp->word;
-			root->count = temp->count;
-			root->order = temp->order;
-			root->left = RemoveNode(root->left, temp->word);
-		}
-	}
-	if (!root) return root;
-
-	root->height = GetMaxHeight(root);
-
-	int bal = GetBalanceWeight(root);
-
-	//Trái trái
-	if (bal > 1 && GetBalanceWeight(root->left) >= 0) {
-		return RotateRight(root);
-	}
-	//Trái phải
-	else if (bal > 1 && GetBalanceWeight(root->left) < 0) {
-		root->left = RotateLeft(root->left);
-		return RotateRight(root);
-	}
-	//Phải phải
-	else if (bal < -1 && GetBalanceWeight(root->right) <= 0) {
-		return RotateLeft(root);
-	}
-	//Phải trái
-	else if (bal < -1 && GetBalanceWeight(root->right) > 0) {
-		root->right = RotateRight(root->right);
-		return RotateLeft(root);
-	}
-	return root;
-}
+//AVLWordNode* FindMostRightNodeAtSubLeftTree(AVLWordNode* root) {
+//	AVLWordNode* curr = root;
+//	while (curr->right != nullptr) {
+//		curr = curr->right;
+//	}
+//	return curr;
+//}
+//
+//AVLWordNode* RemoveNode(AVLWordNode* root, std::string value) {
+//	if (!root) return root;
+//		
+//	if (value.compare(root->word) < 0) {
+//		root->left = RemoveNode(root->left, value);
+//	}
+//	else if (value.compare(root->word) > 0) {
+//		root->right = RemoveNode(root->right, value);
+//	}
+//	else {
+//		if ((root->left == nullptr) || (root->right == nullptr)) {
+//			AVLWordNode* temp = root->left ? root->left : root->right;
+//
+//			if (temp == nullptr) {
+//				temp = root;
+//				root = nullptr;
+//			}
+//			else 
+//				*root = *temp;
+//
+//			free(temp);
+//		}
+//		else {
+//			AVLWordNode* temp = FindMostRightNodeAtSubLeftTree(root->left);
+//			root->word = temp->word;
+//			root->count = temp->count;
+//			root->order = temp->order;
+//			root->left = RemoveNode(root->left, temp->word);
+//		}
+//	}
+//	if (!root) return root;
+//
+//	root->height = GetMaxHeight(root);
+//
+//	int bal = GetBalanceWeight(root);
+//
+//	//Trái trái
+//	if (bal > 1 && GetBalanceWeight(root->left) >= 0) {
+//		return RotateRight(root);
+//	}
+//	//Trái phải
+//	else if (bal > 1 && GetBalanceWeight(root->left) < 0) {
+//		root->left = RotateLeft(root->left);
+//		return RotateRight(root);
+//	}
+//	//Phải phải
+//	else if (bal < -1 && GetBalanceWeight(root->right) <= 0) {
+//		return RotateLeft(root);
+//	}
+//	//Phải trái
+//	else if (bal < -1 && GetBalanceWeight(root->right) > 0) {
+//		root->right = RotateRight(root->right);
+//		return RotateLeft(root);
+//	}
+//	return root;
+//}
 
 AVLDifferNode* Insert(AVLDifferNode* root, std::string value) {
 	if (!root) {

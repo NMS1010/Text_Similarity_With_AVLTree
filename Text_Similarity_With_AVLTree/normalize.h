@@ -35,14 +35,13 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
 
     if (!isRemovePunctual) {
         if (len >= 1 && IsPunctual(str[len-1])) {
-            newStr += str[len-1];
+            newStr += str[len - 1];
         }
         else if (len >= 2 && IsPunctual(str[len - 2])) {
             newStr += str[len - 2];
         }
     }
-    if (newStr != "")
-        str = newStr;
+    str = newStr;
 }
 bool CheckDuplicated(LinkedList* words, const std::string& str) {
     

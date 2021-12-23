@@ -5,7 +5,6 @@
 
 #include "AVLTree.h"
 #include "normalize.h"
-#include "search.h"
 #include "linkedList.h"
 
 //Use AVL Tree
@@ -60,7 +59,7 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		if (IsPunctual(word[word.length() - 1])) {
+		if (word != "" && IsPunctual(word[word.length() - 1])) {
 			word.pop_back();
 			if (!Contain(stopWords, word)) {
 				allWords = Insert(allWords, word, orderWord++);
@@ -70,7 +69,7 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 			orderWord = 1;
 			allWords = nullptr;	
 		}
-		else if (!Contain(stopWords, word)) {
+		else if (word != "" && !Contain(stopWords, word)) {
 			allWords = Insert(allWords, word, orderWord++);
 		}
 	}
@@ -105,7 +104,7 @@ LinkedList* GetWordsFromFile(std::string fileName, AVLWordNode* stopWordsTree) {
 	int count = 1;
 	while (in >> line) {
 		StringTolowerAndRemoveCharacter(line, true);
-		if (!Contain(stopWordsTree,line))
+		if (line != "" && !Contain(stopWordsTree,line))
 			lst->AddTail(new SNode(line,count++));
 	}
 	in.close();

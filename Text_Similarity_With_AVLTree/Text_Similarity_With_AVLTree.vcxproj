@@ -147,7 +147,6 @@
     <ClInclude Include="linkedList.h" />
     <ClInclude Include="normalize.h" />
     <ClInclude Include="processing.h" />
-    <ClInclude Include="search.h" />
     <ClInclude Include="tf_idf.h" />
   </ItemGroup>
   <ItemGroup>

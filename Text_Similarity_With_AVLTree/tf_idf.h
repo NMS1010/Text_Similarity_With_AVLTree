@@ -5,7 +5,6 @@
 #include <set>
 
 #include "AVLTree.h"
-#include "search.h"
 #include "linkedList.h"
 
 double TF(const int &numberOfOccur, const int &totalWord) {
@@ -109,6 +108,7 @@ void Calculate(AVLDifferNode* vectorWeight1, AVLDifferNode* vectorWeight2, doubl
 double Cosine(AVLDifferNode* vectorWeight1, AVLDifferNode* vectorWeight2) {
 	double a = 0, b = 0, c = 0;
 	Calculate(vectorWeight1, vectorWeight2, a, b, c);
+	if (b == 0 || c == 0) return 0;
 	return (double)a / (std::sqrt(b*c));
 }
 
@@ -178,7 +178,7 @@ void ReleasePointer(int len1, int len2, double** &simMatrix) {
 	for (int i = 0; i < len1; i++) {
 		delete []simMatrix[i];
 	}
-	delete []simMatrix;
+	delete simMatrix;
 }
 
 double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> textTree1, std::vector<AVLWordNode*> textTree2) {
@@ -239,7 +239,7 @@ double Get_Sim_Between_Two_Text_With_Sentence_Unit(std::vector<AVLWordNode*> tex
 	}
 	return sim * 0.8 + orderCosine * 0.2;
 }
-//
+//Use Linked List
 
 int GetNumberOfOccur(const std::string& str, LinkedList* lst) {
 	int count = 0;
