@@ -37,7 +37,7 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
         if (len >= 1 && IsPunctual(str[len-1])) {
             newStr += str[len - 1];
         }
-        else if (len >= 2 && IsPunctual(str[len - 2])) {
+        else if (len >= 2 && str[len - 1] == '"' && IsPunctual(str[len - 2])) {
             newStr += str[len - 2];
         }
     }
