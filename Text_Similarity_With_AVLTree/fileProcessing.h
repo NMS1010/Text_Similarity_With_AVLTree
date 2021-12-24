@@ -36,8 +36,10 @@ AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode* stopWo
 	bool isRemovePunctual = true;
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		if (word != "" && !Contain(stopWords,word)) {
-			root = Insert(root, word, count);
+		if (word != ""){
+			if (!Contain(stopWords, word)) {
+				root = Insert(root, word, count);
+			}
 			count++;
 		}
 	}
@@ -59,18 +61,23 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		if (word != "" && IsPunctual(word[word.length() - 1])) {
-			word.pop_back();
-			if (!Contain(stopWords, word)) {
-				allWords = Insert(allWords, word, orderWord++);
+		if (word != "") {
+			if (IsPunctual(word[word.length() - 1])) {
+				word.pop_back();
+				if (!Contain(stopWords, word)) {
+					allWords = Insert(allWords, word, orderWord++);
+				}
+				if (allWords)
+					words.push_back(allWords);
+				orderWord = 1;
+				allWords = nullptr;
 			}
-			if(allWords)
-				words.push_back(allWords);
-			orderWord = 1;
-			allWords = nullptr;	
-		}
-		else if (word != "" && !Contain(stopWords, word)) {
-			allWords = Insert(allWords, word, orderWord++);
+			else {
+				if (!Contain(stopWords, word)) {
+					allWords = Insert(allWords, word, orderWord);
+				}
+				orderWord++;
+			}
 		}
 	}
 	in.close();
@@ -78,21 +85,6 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 }
 //
 //Use LinkedList
-std::vector<std::string> GetStopWords(std::string fileName) {
-	std::ifstream in(fileName);
-	if (!in.is_open()) {
-		throw "Can't open " + fileName;
-	}
-
-	std::vector<std::string> words;
-
-	std::string line;
-	while (in >> line) {
-		words.push_back(line);
-	}
-	in.close();
-	return words;
-}
 LinkedList* GetWordsFromFile(std::string fileName, AVLWordNode* stopWordsTree) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
@@ -104,8 +96,11 @@ LinkedList* GetWordsFromFile(std::string fileName, AVLWordNode* stopWordsTree) {
 	int count = 1;
 	while (in >> line) {
 		StringTolowerAndRemoveCharacter(line, true);
-		if (line != "" && !Contain(stopWordsTree,line))
-			lst->AddTail(new SNode(line,count++));
+		if (line != "") {
+			if (!Contain(stopWordsTree, line))
+				lst->AddTail(new SNode(line, count));
+			count++;
+		}
 	}
 	in.close();
 	return lst;
