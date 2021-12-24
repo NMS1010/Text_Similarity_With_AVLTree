@@ -30,7 +30,10 @@ struct AVLWordNode {
 	AVLWordNode* left;
 	AVLWordNode* right;
 	AVLWordNode() {
-
+		word = "";
+		count = 0;
+		left = nullptr;
+		right = nullptr;
 	}
 	AVLWordNode(std::string value, int x) {
 		word = value;
