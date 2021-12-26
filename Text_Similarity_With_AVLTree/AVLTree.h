@@ -59,11 +59,12 @@ int TotalSize(AVLWordNode* root) {
 template<class T>
 int GetHeight(T root) {
 	if (root) return root->height;
-	return 0;
+	return -1;
 }
 
 template<class T>
 int GetMaxHeight(T root) {
+	if (!root) return -1;
 	return std::max(GetHeight(root->left), GetHeight(root->right)) + 1;
 }
 
@@ -98,7 +99,7 @@ T RotateLeft(T root) {
 template<class T>
 int GetBalanceWeight(T root) {
 	if (root) return GetHeight(root->left) - GetHeight(root->right);
-
+	
 }
 
 template<class T>
