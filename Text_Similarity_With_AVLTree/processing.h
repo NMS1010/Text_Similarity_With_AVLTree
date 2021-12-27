@@ -208,6 +208,25 @@ void Calculate_Similarity_With_Word_Unit_Use_LinkedList(AVLWordNode* stopWordsTr
 	try {
 		LinkedList** allWords = GetWordsOnText(numberOfFile, stopWordsTree,
 			listInputFileName);
+		//double max = 0, min = 1000, average = 0, sum = 0, test;
+		//for (int i = 0; i < 1000; i++) {
+		//	clock_t start, end;
+		//	double duration;
+		//	
+		//	start = clock();
+		//	test = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWords[0], allWords[1]);
+		//	end = clock();
+		//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+		//	if (duration > max) {
+		//		max = duration;
+		//	}
+		//	if (duration < min) {
+		//		min = duration;
+		//	}
+		//	sum += duration;
+		//	std::cout << i << ": " <<duration << std::endl;
+		//}
+		//average = sum / 1000.0;
 		while (true) {
 			int select = DisplayListFileNameAndSelect(listInputFileName, allWords);
 
