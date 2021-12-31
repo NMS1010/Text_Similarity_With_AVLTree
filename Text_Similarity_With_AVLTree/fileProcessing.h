@@ -20,7 +20,24 @@ AVLWordNode* GetStopWordsFromFile(const std::string& fileName) {
 		root = Insert(root, word, count);
 		count++;
 	}
-
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	root = Insert(root, "sun", count);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	in.close();
 	return root;
 }
@@ -36,14 +53,67 @@ AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode* stopWo
 	bool isRemovePunctual = true;
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
+		//double max = 0, min = 1000, average = 0, sum = 0, test;
+		//for (int i = 0; i < 1000; i++) {
+		//	clock_t start, end;
+		//	double duration;
+		//	start = clock();
+		//	StringTolowerAndRemoveCharacter(word, isRemovePunctual);
+		//	end = clock();
+		//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+		//	if (duration > max) {
+		//		max = duration;
+		//	}
+		//	if (duration < min) {
+		//		min = duration;
+		//	}
+		//	sum += duration;
+		//	std::cout << i << ": " << duration << std::endl;
+		//}
+		//average = sum / 1000.0;
 		if (word != ""){
+			//double max = 0, min = 1000, average = 0, sum = 0, test;
+			//for (int i = 0; i < 1000; i++) {
+			//	clock_t start, end;
+			//	double duration;
+			//	start = clock();
+			//	Contain(stopWords, word);
+			//	end = clock();
+			//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+			//	if (duration > max) {
+			//		max = duration;
+			//	}
+			//	if (duration < min) {
+			//		min = duration;
+			//	}
+			//	sum += duration;
+			//	std::cout << i << ": " << duration << std::endl;
+			//}
+			//average = sum / 1000.0;
 			if (!Contain(stopWords, word)) {
 				root = Insert(root, word, count);
 			}
 			count++;
 		}
 	}
-
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	root = Insert(root, "the", count);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	in.close();
 	return root;
 }

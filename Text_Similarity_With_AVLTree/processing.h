@@ -92,6 +92,25 @@ void DisplaySimilarity(std::vector<double> sim, std::vector<std::string> listInp
 // Word Unit
 AVLWordNode** GetWordsOnEachText(int numberOfFile, AVLWordNode* stopWords, std::vector<std::string> listInputFileName) {
 	AVLWordNode** wordsTree = new AVLWordNode * [numberOfFile];
+	//AVLWordNode* temp;
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	temp = GetAllWordFromFile(listInputFileName[0], stopWords);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	for (int i = 0; i < numberOfFile; i++) {
 		wordsTree[i] = new AVLWordNode;
 	}
@@ -111,6 +130,25 @@ void Calculate_Similarity_With_Word_Unit_Use_AVLTree(AVLWordNode* stopWordsTree,
 	try {
 		AVLWordNode** allWordsTree = GetWordsOnEachText(numberOfFile, stopWordsTree,
 			listInputFileName);
+		//double sim;
+		//double max = 0, min = 1000, average = 0, sum = 0, test;
+		//for (int i = 0; i < 1000; i++) {
+		//	clock_t start, end;
+		//	double duration;
+		//	start = clock();
+		//	sim = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWordsTree[0], allWordsTree[1]);
+		//	end = clock();
+		//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+		//	if (duration > max) {
+		//		max = duration;
+		//	}
+		//	if (duration < min) {
+		//		min = duration;
+		//	}
+		//	sum += duration;
+		//	std::cout << i << ": " << duration << std::endl;
+		//}
+		//average = sum / 1000.0;
 		while (true) {
 			int select = DisplayListFileNameAndSelect(listInputFileName, allWordsTree);
 
@@ -214,7 +252,7 @@ void Calculate_Similarity_With_Word_Unit_Use_LinkedList(AVLWordNode* stopWordsTr
 		//	double duration;
 		//	
 		//	start = clock();
-		//	test = Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(allWords[0], allWords[1]);
+		//	allWords[0]->FindOrder("the");
 		//	end = clock();
 		//	duration = ((double)end - start) / CLOCKS_PER_SEC;
 		//	if (duration > max) {
@@ -256,7 +294,24 @@ void Calculate_Similarity_With_Word_Unit_Use_LinkedList(AVLWordNode* stopWordsTr
 void Start() {
 
 	AVLWordNode* stopWordsTree = GetStopWordsFromFile("stopwords.txt");
-
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	stopWordsTree = GetStopWordsFromFile("stopwords.txt");
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	while (true) {
 	enter:
 		system("cls");

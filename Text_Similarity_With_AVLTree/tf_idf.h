@@ -76,8 +76,43 @@ AVLDifferNode* GetWordsNotDuplicatedBetweenTwoText(AVLWordNode* allWordsText1,
 	AVLDifferNode* root = nullptr;
 
 	GetWords(root, allWordsText1);
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	root = Insert(root, "the");
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	GetWords(root, allWordsText2);
-
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	GetWords(root, allWordsText2);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	return root;
 }
 
@@ -85,7 +120,43 @@ void GetWeightOfVectorText(AVLWordNode* allWords1, AVLWordNode* allWords2,
 	AVLDifferNode*& vectorWeight, AVLWordNode* root, const int& numberOfText) {
 
 	if (!vectorWeight) return;
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	GetNumberOfOccurWord(root, vectorWeight->word);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	GetNumberOfTextContainWord(allWords1, allWords2, vectorWeight->word);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	double tf = TF(GetNumberOfOccurWord(root, vectorWeight->word), TotalSize(root));
 	double idf = IDF(GetNumberOfTextContainWord(allWords1, allWords2, vectorWeight->word), numberOfText);
 	vectorWeight->weight = tf * idf;
@@ -139,7 +210,45 @@ double Get_Sim_Between_Two_Text_With_Word_Unit(AVLWordNode* textTree1, AVLWordNo
 
 	GetWeightOfVectorText(textTree1, textTree2, weightVector1, textTree1, 2);
 	GetWeightOfVectorText(textTree1, textTree2, weightVector2, textTree2, 2);
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	GetWeightOfVectorText(textTree1, textTree2, weightVector1, textTree1, 2);
+	//	GetWeightOfVectorText(textTree1, textTree2, weightVector2, textTree2, 2);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 
+	//double cs ;
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	cs = Cosine(weightVector1, weightVector2);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	return Cosine(weightVector1, weightVector2);
 }
 
@@ -147,6 +256,24 @@ void GetOrder(AVLWordNode* wordsTree, std::vector<double>& orderVector,
 	AVLDifferNode* commonWordVector) {
 
 	if (!commonWordVector) return;
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	FindOrder(wordsTree, commonWordVector->word);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	orderVector.push_back(FindOrder(wordsTree, commonWordVector->word));
 	GetOrder(wordsTree, orderVector, commonWordVector->left);
 	GetOrder(wordsTree, orderVector, commonWordVector->right);
@@ -157,6 +284,7 @@ std::vector<double> GetOrderVector(AVLWordNode* wordsTree,
 
 	std::vector<double> orderVector;
 	GetOrder(wordsTree, orderVector, commonWordVector);
+
 	return orderVector;
 }
 
@@ -164,7 +292,24 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(AVLWordNode* textTree1,
 	double cs = Get_Sim_Between_Two_Text_With_Word_Unit(textTree1, textTree2);
 
 	AVLDifferNode* commonWordVector = GetWordsNotDuplicatedBetweenTwoText(textTree1, textTree2);
-
+	//double max = 0, min = 1000, average = 0, sum = 0, test;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	commonWordVector = GetWordsNotDuplicatedBetweenTwoText(textTree1, textTree2);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	std::vector<double> weightOrderVector1 = GetOrderVector(textTree1, commonWordVector);
 	std::vector<double> weightOrderVector2 = GetOrderVector(textTree2, commonWordVector);
 	double order = GetSimOfOrderedVector(weightOrderVector1, weightOrderVector2);
@@ -304,7 +449,7 @@ std::vector<double> GetWeightOfVector(LinkedList* allWords, LinkedList* sampleTe
 }
 void GetWordsFromList(LinkedList*& bagOfCommonWords, LinkedList* allWords) {
 	SNode* temp = allWords->head;
-	
+
 	while (temp) {
 		if (!CheckDuplicated(bagOfCommonWords, temp->word)) {
 			bagOfCommonWords->AddTail(new SNode(temp->word));
@@ -351,7 +496,24 @@ double Get_Sim_Between_Two_Text_With_Word_Unit_And_Order(LinkedList* allWords1, 
 	std::vector<double> orderWords2 = GetOrderWordVector(allWords2, bagOfCommonWords);
 
 	double order = GetSimOfOrderedVector(orderWords1, orderWords2);
-
+	//double max = 0, min = 1000, average = 0, sum = 0;
+	//for (int i = 0; i < 1000; i++) {
+	//	clock_t start, end;
+	//	double duration;
+	//	start = clock();
+	//	order = GetSimOfOrderedVector(orderWords1, orderWords2);
+	//	end = clock();
+	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
+	//	if (duration > max) {
+	//		max = duration;
+	//	}
+	//	if (duration < min) {
+	//		min = duration;
+	//	}
+	//	sum += duration;
+	//	std::cout << i << ": " << duration << std::endl;
+	//}
+	//average = sum / 1000.0;
 	return 0.5 * cs + 0.5 * order;
 }
 //
