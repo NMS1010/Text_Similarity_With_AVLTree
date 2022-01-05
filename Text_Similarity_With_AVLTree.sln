@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Text_Similarity_With_AVLTree", "Text_Similarity_With_AVLTree\Text_Similarity_With_AVLTree.vcxproj", "{DF046CF6-5DD1-4E3A-A0CA-6990ABF437CC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TimeCalculation", "TimeCalculation\TimeCalculation.vcxproj", "{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{DF046CF6-5DD1-4E3A-A0CA-6990ABF437CC}.Release|x64.Build.0 = Release|x64
 		{DF046CF6-5DD1-4E3A-A0CA-6990ABF437CC}.Release|x86.ActiveCfg = Release|Win32
 		{DF046CF6-5DD1-4E3A-A0CA-6990ABF437CC}.Release|x86.Build.0 = Release|Win32
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Debug|x64.ActiveCfg = Debug|x64
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Debug|x64.Build.0 = Debug|x64
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Debug|x86.ActiveCfg = Debug|Win32
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Debug|x86.Build.0 = Debug|Win32
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Release|x64.ActiveCfg = Release|x64
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Release|x64.Build.0 = Release|x64
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Release|x86.ActiveCfg = Release|Win32
+		{85C5598E-1DBA-49FA-9AAB-D5BD2E96CFEE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

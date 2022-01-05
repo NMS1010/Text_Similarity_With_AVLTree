@@ -1,0 +1,2 @@
+example.txt VS vb1.txt: 3.354915%
+example.txt VS example.txt: 100.000000%

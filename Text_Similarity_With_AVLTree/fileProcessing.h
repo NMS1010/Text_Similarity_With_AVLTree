@@ -5,7 +5,6 @@
 
 #include "AVLTree.h"
 #include "normalize.h"
-#include "linkedList.h"
 
 //Use AVL Tree
 AVLWordNode* GetStopWordsFromFile(const std::string& fileName) {
@@ -20,29 +19,11 @@ AVLWordNode* GetStopWordsFromFile(const std::string& fileName) {
 		root = Insert(root, word, count);
 		count++;
 	}
-	//double max = 0, min = 1000, average = 0, sum = 0, test;
-	//for (int i = 0; i < 1000; i++) {
-	//	clock_t start, end;
-	//	double duration;
-	//	start = clock();
-	//	root = Insert(root, "sun", count);
-	//	end = clock();
-	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
-	//	if (duration > max) {
-	//		max = duration;
-	//	}
-	//	if (duration < min) {
-	//		min = duration;
-	//	}
-	//	sum += duration;
-	//	std::cout << i << ": " << duration << std::endl;
-	//}
-	//average = sum / 1000.0;
 	in.close();
 	return root;
 }
 
-AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode* stopWords) {
+AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode*& stopWords) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
 		throw "Can't open " + fileName;
@@ -53,72 +34,18 @@ AVLWordNode* GetAllWordFromFile(const std::string& fileName, AVLWordNode* stopWo
 	bool isRemovePunctual = true;
 	while (in >> word) {
 		StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		//double max = 0, min = 1000, average = 0, sum = 0, test;
-		//for (int i = 0; i < 1000; i++) {
-		//	clock_t start, end;
-		//	double duration;
-		//	start = clock();
-		//	StringTolowerAndRemoveCharacter(word, isRemovePunctual);
-		//	end = clock();
-		//	duration = ((double)end - start) / CLOCKS_PER_SEC;
-		//	if (duration > max) {
-		//		max = duration;
-		//	}
-		//	if (duration < min) {
-		//		min = duration;
-		//	}
-		//	sum += duration;
-		//	std::cout << i << ": " << duration << std::endl;
-		//}
-		//average = sum / 1000.0;
 		if (word != ""){
-			//double max = 0, min = 1000, average = 0, sum = 0, test;
-			//for (int i = 0; i < 1000; i++) {
-			//	clock_t start, end;
-			//	double duration;
-			//	start = clock();
-			//	Contain(stopWords, word);
-			//	end = clock();
-			//	duration = ((double)end - start) / CLOCKS_PER_SEC;
-			//	if (duration > max) {
-			//		max = duration;
-			//	}
-			//	if (duration < min) {
-			//		min = duration;
-			//	}
-			//	sum += duration;
-			//	std::cout << i << ": " << duration << std::endl;
-			//}
-			//average = sum / 1000.0;
 			if (!Contain(stopWords, word)) {
 				root = Insert(root, word, count);
 			}
 			count++;
 		}
 	}
-	//double max = 0, min = 1000, average = 0, sum = 0, test;
-	//for (int i = 0; i < 1000; i++) {
-	//	clock_t start, end;
-	//	double duration;
-	//	start = clock();
-	//	root = Insert(root, "the", count);
-	//	end = clock();
-	//	duration = ((double)end - start) / CLOCKS_PER_SEC;
-	//	if (duration > max) {
-	//		max = duration;
-	//	}
-	//	if (duration < min) {
-	//		min = duration;
-	//	}
-	//	sum += duration;
-	//	std::cout << i << ": " << duration << std::endl;
-	//}
-	//average = sum / 1000.0;
 	in.close();
 	return root;
 }
 
-std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode* stopWords) {
+std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode*& stopWords) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
 		throw "Can't open " + fileName;
@@ -150,28 +77,40 @@ std::vector<AVLWordNode*> GetVectorSent(const std::string& fileName, AVLWordNode
 			}
 		}
 	}
+	if(allWords) words.push_back(allWords);
 	in.close();
 	return words;
 }
-//
-//Use LinkedList
-LinkedList* GetWordsFromFile(std::string fileName, AVLWordNode* stopWordsTree) {
+std::vector<std::string> SaveVector(std::string fileName) {
 	std::ifstream in(fileName);
 	if (!in.is_open()) {
 		throw "Can't open " + fileName;
 	}
-	LinkedList* lst = new LinkedList;
+	std::vector<std::string> a;
 	std::string line;
 
 	int count = 1;
 	while (in >> line) {
-		StringTolowerAndRemoveCharacter(line, true);
-		if (line != "") {
-			if (!Contain(stopWordsTree, line))
-				lst->AddTail(new SNode(line, count));
-			count++;
-		}
+		a.push_back(line);
 	}
 	in.close();
-	return lst;
+	return a;
+}
+void WriteResult(std::vector<std::vector<double>> res, std::string fileName) {
+	int size = res.size();
+	std::ofstream ou(fileName);
+
+	for (int i = 0; i < size; i++) {
+		ou << i + 1 << " " << res[i][0] << " " << res[i][1] << " " << res[i][2] << std::endl;
+	}
+	ou.close();
+}
+void WriteSim(std::vector<std::vector<std::string>> res, std::string fileName) {
+	int size = res.size();
+	std::ofstream ou(fileName);
+
+	for (int i = 0; i < size; i++) {
+		ou << res[i][0] << ": " << res[i][1]  << std::endl;
+	}
+	ou.close();
 }

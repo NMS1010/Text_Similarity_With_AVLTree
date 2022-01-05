@@ -15,47 +15,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Text_Similarity_With_AVLTree.cpp">
+    <ClCompile Include="TimeCalculation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fileProc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="AVLTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fileProcessing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="processing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="normalize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tf_idf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="testTime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="text1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="text2.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="text3.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="text4.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="doc1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="doc2.txt">
+    <Text Include="search1.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="1.txt">
@@ -73,25 +55,7 @@
     <Text Include="5.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="vb1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="vb2.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="vb3.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="vb4.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="vb5.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="search.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="stopwords.txt">
+    <Text Include="sample.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

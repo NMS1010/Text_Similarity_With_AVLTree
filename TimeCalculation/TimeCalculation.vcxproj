@@ -21,16 +21,16 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{df046cf6-5dd1-4e3a-a0ca-6990abf437cc}</ProjectGuid>
-    <RootNamespace>TextSimilarityWithAVLTree</RootNamespace>
+    <ProjectGuid>{85c5598e-1dba-49fa-9aab-d5bd2e96cfee}</ProjectGuid>
+    <RootNamespace>TimeCalculation</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -139,15 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Text_Similarity_With_AVLTree.cpp" />
+    <ClCompile Include="TimeCalculation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVLTree.h" />
-    <ClInclude Include="fileProcessing.h" />
+    <ClInclude Include="fileProc.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="normalize.h" />
-    <ClInclude Include="processing.h" />
-    <ClInclude Include="testTime.h" />
-    <ClInclude Include="tf_idf.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="1.txt" />
@@ -155,19 +154,8 @@
     <Text Include="3.txt" />
     <Text Include="4.txt" />
     <Text Include="5.txt" />
-    <Text Include="search.txt" />
-    <Text Include="stopwords.txt" />
-    <Text Include="text1.txt" />
-    <Text Include="text2.txt" />
-    <Text Include="text3.txt" />
-    <Text Include="text4.txt" />
-    <Text Include="doc1.txt" />
-    <Text Include="doc2.txt" />
-    <Text Include="vb1.txt" />
-    <Text Include="vb2.txt" />
-    <Text Include="vb3.txt" />
-    <Text Include="vb4.txt" />
-    <Text Include="vb5.txt" />
+    <Text Include="sample.txt" />
+    <Text Include="search1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

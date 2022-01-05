@@ -31,7 +31,7 @@ struct AVLWordNode {
 	AVLWordNode* right;
 	AVLWordNode() {
 		word = "";
-		count = 1;
+		count = 0;
 		left = nullptr;
 		right = nullptr;
 	}
@@ -115,7 +115,7 @@ bool Contain(T& root, const std::string& word) {
 		return true;
 }
 
-int FindOrder(AVLWordNode*& root,const std::string& value) {
+int FindOrder(AVLWordNode*& root, std::string& value) {
 	if (!root) return 0;
 
 	if (value.compare(root->word) < 0) {
@@ -128,7 +128,7 @@ int FindOrder(AVLWordNode*& root,const std::string& value) {
 		return root->order[0];
 }
 
-AVLWordNode* Insert(AVLWordNode*& root,const std::string& value, const int& order) {
+AVLWordNode* Insert(AVLWordNode*& root, const std::string& value, const int& order) {
 	if (!root) {
 		return new AVLWordNode(value,order);
 	}
@@ -236,7 +236,7 @@ AVLWordNode* Insert(AVLWordNode*& root,const std::string& value, const int& orde
 //	return root;
 //}
 
-AVLDifferNode* Insert(AVLDifferNode*& root, const std::string& value) {
+AVLDifferNode* Insert(AVLDifferNode*& root,const std::string& value) {
 	if (!root) {
 		return new AVLDifferNode(value);
 	}
@@ -278,14 +278,4 @@ AVLDifferNode* Insert(AVLDifferNode*& root, const std::string& value) {
 	}
 
 	return root;
-}
-template<class T>
-void deleteTree(T* node)
-{
-	if (!node) return;
-
-	deleteTree(node->left);
-	deleteTree(node->right);
-
-	delete node;
 }

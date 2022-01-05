@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+#include "linkedList.h"
 #include "AVLTree.h"
 
 bool IsAlphabetCharacter(const char &c) {
@@ -41,4 +42,28 @@ void StringTolowerAndRemoveCharacter(std::string& str, const bool &isRemovePunct
         }
     }
     str = newStr;
+}
+bool CheckDuplicated(LinkedList* words, const std::string& str) {
+    
+    SNode* temp = words->head;
+
+    while (temp) {
+        if (temp->word.compare(str) == 0) {
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;
+}
+bool CheckDuplicated(std::string* words, int n, const std::string& str) {
+    
+    int i = 0;
+
+    while (i<n) {
+        if (words[i].compare(str) == 0) {
+            return true;
+        }
+        i++;
+    }
+    return false;
 }
