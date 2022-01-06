@@ -37,7 +37,7 @@ int DisplayListFileNameAndSelect(std::vector<std::string> listInputFileName, std
 	system("cls");
 	std::cout << "List file text entered: " << std::endl;
 	for (int i = 0; i < listInputFileName.size(); i++) {
-		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Sent: " << allSentTree[i].size() << ", Total Words: " << GetNumberOfWordsEachSent(allSentTree[i]) << ")" << std::endl;
+		std::cout << i + 1 << ". " << listInputFileName[i] << "(Total Sent: " << allSentTree[i].size() << ")" << std::endl;
 	}
 again:
 	std::cout << "Choose file text you want to compare (enter its order): ";
