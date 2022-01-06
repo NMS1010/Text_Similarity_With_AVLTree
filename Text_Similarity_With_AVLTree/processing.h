@@ -181,7 +181,7 @@ void Calculate_Similarity_With_Sentence_Unit(AVLWordNode* stopWordsTree, int num
 //End Sentence Unit
 
 void Start() {
-
+	//Gọi hàm kiểm tra thời gian của file header testTime.h, kiểm tra phần nào thì qua file testTime.h bỏ comment phần tương ứng
 	//CheckTime();
 	AVLWordNode* stopWordsTree = GetStopWordsFromFile("stopwords.txt");
 

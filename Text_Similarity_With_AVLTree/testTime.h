@@ -561,6 +561,7 @@ void ProcessString() {
 	}
 	WriteResult(time, "timeString.txt");
 }
+
 void CheckTime() {
 	std::vector<std::string> fileNames{ "vb1.txt" ,"vb2.txt" ,"vb3.txt" ,"vb4.txt" ,"vb5.txt" };
 	std::string fileDes = "example.txt";

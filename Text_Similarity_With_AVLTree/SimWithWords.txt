@@ -1,2 +1,6 @@
 example.txt VS vb1.txt: 3.354915%
+example.txt VS vb2.txt: 6.171167%
+example.txt VS vb3.txt: 8.375022%
+example.txt VS vb4.txt: 24.865845%
+example.txt VS vb5.txt: 8.889916%
 example.txt VS example.txt: 100.000000%

@@ -94,5 +94,17 @@
     <Text Include="stopwords.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="chuoi.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="example.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Cau_a_vi_du_Bao_cao.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Cau_b_vi_du_Bao_cao.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

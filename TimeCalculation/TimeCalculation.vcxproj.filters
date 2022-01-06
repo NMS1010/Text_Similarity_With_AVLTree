@@ -37,9 +37,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="search1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="1.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -55,7 +52,10 @@
     <Text Include="5.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sample.txt">
+    <Text Include="TextSample.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="search.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

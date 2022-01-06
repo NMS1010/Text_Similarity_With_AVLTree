@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <algorithm>
 #include <conio.h>
@@ -26,15 +26,6 @@ int binarySearch(Node*& a, int l, int r, std::string& word)
     return false;
 }
 
-int LinearSearch(Node* a,int n, std::string value) {
-    for (int i = 0; i < n; i++) {
-        if (a[i].word.compare(value) == 0) {
-            return i;
-        }
-    }
-    return -1;
-}
-
 std::string MaxVectorSizeInHST(HashTable* ht) {
     int max = 0;
     std::string res;
@@ -56,13 +47,16 @@ void deleteTree(T* node)
 
     delete node;
 }
+
 void DeleteHST(HashTable* ht) {
     for (int i = ht->minHash; i <= ht->maxHash; i++) {
         ht->ht[i].clear();
     }
     delete ht;
 }
+
 void CheckTimeReadFileAndInsert(std::vector<std::string> fileName) {
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
     int size = fileName.size();
     std::vector<std::vector<double>> time(size);
     for (int i = 0; i < size; i++) {
@@ -78,7 +72,7 @@ void CheckTimeReadFileAndInsert(std::vector<std::string> fileName) {
             HashTable* ht = SaveHS(fileName[i]);
             //AVLWordNode* avl = SaveAVL(fileName[i]);
             end = clock();
-            //DeleteHST(ht);
+            DeleteHST(ht);
             //deleteTree(avl);
             //delete[] a;
             duration = ((double)end - start) / CLOCKS_PER_SEC;
@@ -96,12 +90,14 @@ void CheckTimeReadFileAndInsert(std::vector<std::string> fileName) {
         time[i].push_back(max);
         time[i].push_back(average);
     }
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
+ 
     //WriteResult(time, "insertAVL.txt");
     //WriteResult(time, "insertHashTable.txt");
     //WriteResult(time, "insertArray.txt");
 }
 void CheckTimeSearch(std::vector<std::string> test, std::vector<std::string> fileName) {
-
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
     bool res;
     int size = fileName.size();
     std::vector<std::vector<double>> time(size);
@@ -141,11 +137,13 @@ void CheckTimeSearch(std::vector<std::string> test, std::vector<std::string> fil
         time[i].push_back(max);
         time[i].push_back(average);
     }
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
     WriteResult(time, "searchAVL.txt");
     //WriteResult(time, "searchHashTable.txt");
     //WriteResult(time, "searchArray.txt");
 }
 void CheckTimeOnAVLTree(std::vector<std::string> fileName, std::string fileSample) {
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
     bool res, size1, size2, pos;
     std::vector<std::string> sample = SaveVector(fileSample);
     int size = fileName.size();
@@ -181,6 +179,7 @@ void CheckTimeOnAVLTree(std::vector<std::string> fileName, std::string fileSampl
         time[i].push_back(max);
         time[i].push_back(average);
     }
+    //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
     WriteResult(time, "AVLContain.txt");
     //WriteResult(time, "AVLFindOrder.txt");
     //WriteResult(time, "AVLSize.txt");
@@ -191,13 +190,16 @@ int main()
 {
     std::string fileName = "TextSample.txt";
     std::string fileSearch = "search.txt";
-    //WriteToFile(fileName, fileSearch, 8000, 9000);
+
     std::vector<std::string> fileNames{ "1.txt" ,"2.txt" ,"3.txt" ,"4.txt" ,"5.txt" };
+
     //std::vector<std::string> test = SaveVector(fileSearch);
     //CheckTimeSearch(test, fileNames);
+
     CheckTimeReadFileAndInsert(fileNames);
+
     //CheckTimeOnAVLTree(fileNames,"search.txt");
-    //HashTable* ht = SaveHS(fileNames[0]);
+
     return 0;
 }
 

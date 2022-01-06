@@ -155,6 +155,10 @@
     <Text Include="3.txt" />
     <Text Include="4.txt" />
     <Text Include="5.txt" />
+    <Text Include="Cau_a_vi_du_Bao_cao.txt" />
+    <Text Include="Cau_b_vi_du_Bao_cao.txt" />
+    <Text Include="chuoi.txt" />
+    <Text Include="example.txt" />
     <Text Include="search.txt" />
     <Text Include="stopwords.txt" />
     <Text Include="text1.txt" />

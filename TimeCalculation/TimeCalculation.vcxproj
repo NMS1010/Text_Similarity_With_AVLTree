@@ -154,8 +154,8 @@
     <Text Include="3.txt" />
     <Text Include="4.txt" />
     <Text Include="5.txt" />
-    <Text Include="sample.txt" />
-    <Text Include="search1.txt" />
+    <Text Include="search.txt" />
+    <Text Include="TextSample.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
