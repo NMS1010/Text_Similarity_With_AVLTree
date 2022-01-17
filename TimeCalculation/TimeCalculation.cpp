@@ -93,7 +93,7 @@ void CheckTimeReadFileAndInsert(std::vector<std::string> fileName) {
     //Cần thao tác trên cấu trúc dữ liệu nào thì bỏ comment của cấu trúc dữ liệu đó
  
     //WriteResult(time, "insertAVL.txt");
-    //WriteResult(time, "insertHashTable.txt");
+    WriteResult(time, "insertHashTable.txt");
     //WriteResult(time, "insertArray.txt");
 }
 void CheckTimeSearch(std::vector<std::string> test, std::vector<std::string> fileName) {

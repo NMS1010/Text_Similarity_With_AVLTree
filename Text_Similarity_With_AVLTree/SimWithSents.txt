@@ -1,2 +1,2 @@
-vb4.txt VS vb4.txt: 100.000000%
-vb4.txt VS vb5.txt: 7.692490%
+E:\Learning\Projects\x.txt VS E:\Learning\Projects\x.txt: 100.000000%
+E:\Learning\Projects\x.txt VS E:\Learning\Projects\y.txt: 52.826874%
